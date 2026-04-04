@@ -1,0 +1,20 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+tab pr = tebasplugin::getResource("browserPath");
+if pr.trim()% > 0{
+	print("Browser executable path gotten from previous plugin resources");
+	exit;
+}
+
+tab sr = getShared("paths.browser");
+if sr.trim()% > 0{
+	tebasplugin::setResource("browserPath", sr);
+	print("Browser executable path gotten from shared resources");
+	exit;
+}
+
+tab m = input("Enter a browser executable path: ").removeQuotes();
+tebasplugin::setResource("browserPath", m);
+setShared("paths.browser", m);

@@ -1,0 +1,18 @@
+import tebas;
+import tebasproject;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+if tebasproject::fileExists("name.txt"){
+	tab n = tebasproject::fileRead("name.txt");
+	if tebasproject::fileExists(n + ".tbplg"){
+		tebasproject::pluginInstallLocal(n + ".tbplg");
+	}else{
+		error("Missing '" + n + ".tbplg'. Build the plugin first");
+	}
+}else{
+	error("Missing name.txt");
+}

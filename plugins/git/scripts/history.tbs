@@ -1,0 +1,15 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebasplugin;
+import "utils.utils";
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+exitIfNotInit();
+
+tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["--no-pager", "log", "--oneline", "--graph", "--decorate"]);

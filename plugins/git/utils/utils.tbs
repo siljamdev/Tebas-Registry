@@ -1,0 +1,35 @@
+import stdlib;
+import stdnum;
+import stdlist;
+import tebas;
+import tebasproject;
+import tebasplugin;
+
+//ONLY ADD TO SCRIPTS!!!!
+
+export function exitIfNotInit(){
+	if !tebasproject::folderExists(".git"){
+		error("Git repo not initliazed in local project");
+		exit;
+	}
+}
+
+export function getInitialBranch(){
+	tab p = tebasproject::getProperty("git.defaultBranch");
+	if(p.length == 1){
+		return p;
+	}else{
+		return tebasplugin::getResource("defaultBranch");
+	}
+}
+
+export function branchExists(branch){
+	tab sc = "refs/heads/" + branch;
+	tab exitCode = tebasproject::runProcessWithExitCode(tebasplugin::getResource("gitPath"), "", ["rev-parse", "--verify", sc^]);
+	return exitCode == 0;
+}
+
+export function getCurrentBranch(){
+	tab list = tebasproject::runProcessWithOutput(tebasplugin::getResource("gitPath"), "", ["branch", "--show-current"]);
+	return list.getTab(0);
+}

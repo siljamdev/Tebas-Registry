@@ -1,0 +1,51 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+tab validKeys = []; //List of valid configurable keys
+tab trueFalseKeys = []; //Add here keys that can only take true/false values
+tab keysDescription = []; //In the same order as validKeys
+
+if args.length == 1{
+	if args.0 == "list"{
+		print("Here is a list of valid keys and their description:");
+		tab i = 0;
+		while(i < validKeys){
+			print("  " + validKeys[i] + ": " + keysDescription[i]);
+			i += 1;
+		}
+		exit;
+	}else if args.0 == "see"{
+		print("Current config:");
+		foreach key @ validKeys{
+			print("  " + key + ": " + tebastemplate::getResource(key));
+		}
+		exit;
+	}
+}
+
+if args.length != 2{
+	error("Expected 2 arguments: 'key' 'value'");
+	exit;
+}
+
+if !(args.0 @ validKeys){
+	error("Invalid key");
+	exit;
+}
+
+if args.0 @ trueFalseKeys{
+	args.1 = args.1.lower();
+	if !(args.1 == "true" | args.1 == "t" | args.1 == "false" | args.1 == "f"){
+		error("Invalid value: Use true/false");
+		exit;
+	}
+	
+	if args.1 == "t"{
+		args.1 = "true";
+	}else if args.1 == "f"{
+		args.1 = "false";
+	}
+}
+
+tebastemplate::setResource(args.0, args.1);

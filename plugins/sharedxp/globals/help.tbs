@@ -1,0 +1,18 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " plugin help");
+print("");
+print("Globals:");
+print("  list                 List all shared resources keys");
+print("  get <key>            Get the value of a shared resource");
+print("  set <key> <value>    Set the value of a shared resource");
+print("  help                 This help menu");
+print("");
+print("This plugin helps you navigate Tebas shared resources");

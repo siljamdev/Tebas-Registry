@@ -1,0 +1,1 @@
+Plugin that handles most git operations

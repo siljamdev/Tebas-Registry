@@ -1,0 +1,24 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+setAuthor();
+
+function setAuthor(){
+	tab pr = tebastemplate::getResource("author");
+	if pr.trim()% > 0{
+		print("Author name gotten from previous template resources");
+		return;
+	}
+	
+	tab sr = getShared("author");
+	if sr.trim()% > 0{
+		tebastemplate::setResource("author", sr);
+		print("Author name gotten from shared resources");
+		return;
+	}
+	
+	tab m = input("Enter your author name: ").trim();
+	tebastemplate::setResource("author", m);
+	setShared("author", m);
+}

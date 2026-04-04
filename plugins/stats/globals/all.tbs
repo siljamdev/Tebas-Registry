@@ -1,0 +1,74 @@
+import stdlib;
+import stdnum;
+import tebas;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+tab projects = getAllProjectsPaths();
+tab unsorted;
+
+tab totalLines = "0";
+
+foreach proj @ projects{
+	if !tebas::projectExists(proj){
+		continue;
+	}
+	
+	tab lines = getProjectProperty(proj, "stats.codeLines");
+	if(lines.isNum()){
+		unsorted += [getProjectName(proj), lines];
+		totalLines = sum(totalLines, lines);
+	}else{
+		unsorted += [getProjectName(proj), "0"];
+	}
+}
+
+tab sorted = sortByValue(unsorted);
+
+print("Lines of code by project:");
+tab c = "1";
+tab i = 0;
+while i < sorted{
+	print("  " + c + ". " + sorted[i] + ": " + sorted[i + 1]);
+	
+	c = sum(c, "1");
+	i += 2;
+}
+print("");
+print("Total lines of code: " + totalLines);
+
+function sortByValue(result){
+	tab n = result.length;
+	
+	tab i = 0;
+	while i < n{
+		tab minIndex = i;
+		
+		tab j = i + 2;
+		while j < n{
+			if(greater(result[j + 1], result[minIndex + 1])){
+				minIndex = j;
+			}
+			j += 2;
+		}
+		
+		//Swap
+		if(minIndex != i){
+			tab tmpName = result[i];
+			tab tmpValue = result[i + 1];
+			
+			result[i] = result[minIndex];
+			result[i + 1] = result[minIndex + 1];
+			
+			result[minIndex] = tmpName;
+			result[minIndex + 1] = tmpValue;
+		}
+		
+		i += 2;
+	}
+	
+	return result;
+}

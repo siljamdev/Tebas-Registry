@@ -1,0 +1,10 @@
+import stdlib;
+import tebas;
+import tebasproject;
+
+if args.length != 1{
+	error("Expected 1 argument: 'key'");
+	exit;
+}
+
+print(args.0 + ": " + tebasproject::getResource(args.0));

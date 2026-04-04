@@ -1,0 +1,3 @@
+import tebasproject;
+
+runScript("build", args);

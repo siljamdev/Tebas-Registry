@@ -1,0 +1,16 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+tab all = tebasproject::getAllResourceKeys();
+print(toNum(all) + " project resources");
+
+foreach a @ all{
+	print("  " + a + ": " + tebasproject::getResource(a));
+}

@@ -1,0 +1,6 @@
+import tebasproject;
+import "utils.special";
+
+if !trySpecialRun(args.0){
+	runScript("run", args.0);
+}

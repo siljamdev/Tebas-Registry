@@ -1,0 +1,22 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+print(getName() + " plugin help");
+print("");
+print("Scripts:");
+print("  run [file]      Run the project");
+print("  debug [file]    Debug the project");
+print("  build [file]    Build the project");
+print("Globals:");
+print("  run <file>              Attempt to run a runnable file");
+print("  config <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                    This help menu");
+print("");
+print("This plugin can run anything from an unified command");
+print("");
+print("To make your template compailbe with it, add the following scripts:");
+print("  run [file]");
+print("  debug [file]");
+print("  build [file]");
+print("They have to allow taking a file as argument, even if they do not use it");

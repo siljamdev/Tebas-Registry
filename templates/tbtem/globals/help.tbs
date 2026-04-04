@@ -1,0 +1,31 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " template help");
+print("");
+print("Scripts:");
+print("  build         Builds the template");
+print("  run           Builds the template");
+print("  install       Installs the template if it has been built");
+print("  add-tconfig    Adds a default tconfig global script, ready to be filled with the needed values to operate");
+print("Globals:");
+print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                     This help menu");
+print("");
+print("This template helps you creating Tebas templates");
+print("The file structure is the following:");
+print("Project root");
+print("├──scripts      : folder with template scripts, as .tbs files");
+print("├──globals      : folder with template globals, as .tbs files");
+print("├──utils        : folder with util code to import, as .tbs files");
+print("├──resources    : any files to be added as resources. Only the file name will be added as key");
+print("├──name.txt           : template name. Mandatory");
+print("├──author.txt         : template author");
+print("├──description.txt    : template description");
+print("├──properties.tbs     : properties code, include function `getProperty(key)`");

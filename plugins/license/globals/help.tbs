@@ -1,0 +1,21 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " plugin help");
+print("");
+print("Scripts:");
+print("  add <license>    Add a license to the project");
+print("Globals:");
+print("  list                       See a list of available licenses");
+print("  import <license> <path>    Import a new license");
+print("  delete <license>           Delete a license");
+print("  config <key> <value>       Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                       This help menu");
+print("");
+print("This plugin adds a LICENSE file. There are multiple preinstalled licenses");

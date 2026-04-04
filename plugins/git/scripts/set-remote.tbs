@@ -1,0 +1,20 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebasplugin;
+import "utils.utils";
+import "utils.remotes";
+
+if args.length != 2{
+	error("Expected 2 arguments: 'name', 'url'");
+	exit;
+}
+
+exitIfNotInit();
+
+if existsRemote(args.0){
+	tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["remote", "set-url", args.0, args.1]);
+}else{
+	tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["remote", "add", args.0, args.1]);
+}

@@ -1,0 +1,24 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebasplugin;
+import "utils.utils";
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+exitIfNotInit();
+
+tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["add", getAddTarget()]);
+
+function getAddTarget(){
+	tab p = tebasproject::getProperty("git.addTarget");
+	if(p.length == 1){
+		return p;
+	}else{
+		return "-A";
+	}
+}

@@ -1,0 +1,26 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebasplugin;
+import "utils.utils";
+import "utils.remotes";
+
+exitIfNotInit();
+
+if args.length == 0{
+	tab remotes = getAllRemotes();
+	if remotes.length == 1{
+		push(remotes.0);
+	}else{
+		error("More than one remote. Please specify the argument: 'remote'");
+	}
+}else if args.length == 1{
+	push(args.0);
+}else{
+	error("Expected 1 argument: 'remote'");
+}
+
+function push(remote){
+	tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["push", remote, getCurrentBranch(), "--follow-tags"]);
+}

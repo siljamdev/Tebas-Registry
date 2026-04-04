@@ -1,0 +1,15 @@
+import stdlib;
+import stdnum;
+import tebas;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+tab all = tebas::getAllSharedKeys();
+print(toNum(all) + " shared resources");
+
+foreach a @ all{
+	print("  " + a + ": " + tebas::getShared(a));
+}

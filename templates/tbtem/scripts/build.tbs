@@ -1,0 +1,4 @@
+import tebas;
+import tebasproject;
+
+templateBuild(tebasproject::getPath(), tebasproject::getPath());

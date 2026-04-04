@@ -1,0 +1,9 @@
+import stdlib;
+import tebas;
+
+if args.length != 2{
+	error("Expected 2 arguments: 'key', 'value'");
+	exit;
+}
+
+tebas::setShared(args.0, args.1);

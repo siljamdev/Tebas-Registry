@@ -1,0 +1,36 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+addFile("apachev2");
+addFile("bsdv3clause");
+addFile("cc0");
+addFile("gplv3");
+addFile("mit");
+addFile("mplv2");
+addFile("unlicense");
+
+setAuthor();
+
+function addFile(license){
+	tebasplugin::fileWrite(license + ".txt", tebasplugin::getResource(license));
+}
+
+function setAuthor(){
+	tab pr = tebasplugin::getResource("author");
+	if pr.trim()% > 0{
+		print("Author name gotten from previous plugin resources");
+		return;
+	}
+	
+	tab sr = getShared("author");
+	if sr.trim()% > 0{
+		tebasplugin::setResource("author", sr);
+		print("Author name gotten from shared resources");
+		return;
+	}
+	
+	tab m = input("Enter your author name: ").trim();
+	tebasplugin::setResource("author", m);
+	setShared("author", m);
+}

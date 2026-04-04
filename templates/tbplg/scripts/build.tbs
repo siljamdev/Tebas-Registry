@@ -1,0 +1,4 @@
+import tebas;
+import tebasproject;
+
+pluginBuild(tebasproject::getPath(), tebasproject::getPath());

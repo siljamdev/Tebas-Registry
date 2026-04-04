@@ -1,0 +1,9 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+export function ensureDefaultGitignoreExists(){
+	if !tebasplugin::fileExists("default.gitignore"){
+		tebasplugin::fileWrite("default.gitignore", tebasplugin::getResource("gitignore")); //Ensure file exists
+	}
+}

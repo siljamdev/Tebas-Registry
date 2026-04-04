@@ -1,0 +1,1 @@
+Plugin that adds a LICENSE to your project

@@ -1,0 +1,16 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+tab all = tebasplugin::folderListFiles("", "*.txt");
+
+print("Available licenses:");
+
+foreach l @ all{
+	print("  " + getPathFilenameNoExtension(l));
+}

@@ -1,0 +1,17 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+export function trySpecialRun(file){
+	if(getPathExtension(file).upper() == ".HTML"){
+		return tebasplugin::runProcess(tebasplugin::getResource("browserPath"), "", file);
+	}
+}
+
+export function trySpecialDebug(file){
+	
+}
+
+export function trySpecialBuild(file){
+	
+}

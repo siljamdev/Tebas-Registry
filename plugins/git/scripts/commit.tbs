@@ -1,0 +1,25 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebasplugin;
+import "utils.utils";
+
+if args.length != 1{
+	error("Expected 1 argument: 'message'");
+	exit;
+}
+
+exitIfNotInit();
+
+//Auto add
+if doAddOnCommit(){
+	tebasproject::runPluginScript(tebasplugin::getName(), "add", []);
+}
+
+tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["commit", "-m", args.0]);
+
+function doAddOnCommit(){
+	tab v = tebasplugin::getResource("addOnCommit");
+	return v == "true";
+}

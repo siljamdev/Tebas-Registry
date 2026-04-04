@@ -1,0 +1,36 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+getProperty(""); //Make sure the compiler does not remove the function
+
+export function getProperty(key){
+	//Stats plugin. Expects a stdnum num
+	if(key == "stats.codeLines"){
+		tab c = "0";
+		c = sum(c, linesInFolder("scripts"));
+		c = sum(c, linesInFolder("globals"));
+		c = sum(c, linesInFolder("utils"));
+		return c;
+	}
+	
+	if(key == "git.defaultGitignore"){
+		return tebastemplate::getResource("gitignore").replace("$name", tebastemplate::getName()).splitLines();
+	}
+}
+
+//returns stdnum num
+function linesInFolder(path){
+	tab total = "0";
+	if !folderExists(path){
+		return total;
+	}
+	
+	tab files = folderListFiles(path, "*.tbs");
+	foreach file @ files{
+		total = sum(total, max("0", fileReadLines(file).length.toNum()));
+	}
+	return total;
+}

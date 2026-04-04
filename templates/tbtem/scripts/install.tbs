@@ -1,0 +1,18 @@
+import tebas;
+import tebasproject;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+if tebasproject::fileExists("name.txt"){
+	tab n = tebasproject::fileRead("name.txt");
+	if tebasproject::fileExists(n + ".tbtem"){
+		tebasproject::templateInstallLocal(n + ".tbtem");
+	}else{
+		error("Missing '" + n + ".tbtem'. Build the template first");
+	}
+}else{
+	error("Missing name.txt");
+}

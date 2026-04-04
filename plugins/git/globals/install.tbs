@@ -1,0 +1,30 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+import "utils.gitignore";
+
+gitPath();
+gitignoreFile();
+
+function gitignoreFile(){
+	ensureDefaultGitignoreExists();
+}
+
+function gitPath(){
+	tab pr = tebasplugin::getResource("gitPath");
+	if pr.trim()% > 0{
+		print("Git executable path gotten from previous plugin resources");
+		return;
+	}
+	
+	tab sr = getShared("paths.git");
+	if sr.trim()% > 0{
+		tebasplugin::setResource("gitPath", sr);
+		print("Git executable path gotten from shared resources");
+		return;
+	}
+	
+	tab m = input("Enter git executable path: ").removeQuotes();
+	tebasplugin::setResource("gitPath", m);
+	setShared("paths.git", m);
+}

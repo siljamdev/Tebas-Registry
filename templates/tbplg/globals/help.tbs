@@ -1,0 +1,30 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " template help");
+print("");
+print("Scripts:");
+print("  build         Builds the plugin");
+print("  run           Builds the plugin");
+print("  install       Installs the plugin if it has been built");
+print("  add-config    Adds a default config global script, ready to be filled with the needed values to operate");
+print("Globals:");
+print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                     This help menu");
+print("");
+print("This template helps you creating Tebas plugins");
+print("The file structure is the following:");
+print("Project root");
+print("├──scripts      : folder with plugin scripts, as .tbs files");
+print("├──globals      : folder with plugin globals, as .tbs files");
+print("├──utils        : folder with util code to import, as .tbs files");
+print("├──resources    : any files to be added as resources. Only the file name will be added as key");
+print("├──name.txt           : plugin name. Mandatory");
+print("├──author.txt         : plugin author");
+print("├──description.txt    : plugin description");

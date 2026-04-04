@@ -1,0 +1,27 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebasplugin;
+import "utils.utils";
+import "utils.gitignore";
+
+//git init
+tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["init", "-b", getInitialBranch()]);
+
+//gitignore
+if !tebasproject::fileExists(".gitignore"){
+	tebasproject::fileWriteLines(".gitignore", getInitialGitignoreLines());
+}
+
+function getInitialGitignoreLines(){
+	ensureDefaultGitignoreExists();
+	
+	tab base = tebasplugin::fileRead("default.gitignore").splitLines();
+	tab p = tebasproject::getProperty("git.defaultGitignore");
+	if(p.length > 0){
+		return base + p;
+	}else{
+		return base;
+	}
+}

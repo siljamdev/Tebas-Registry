@@ -1,0 +1,9 @@
+import stdlib;
+import tebas;
+
+if args.length != 1{
+	error("Expected 1 argument: 'key'");
+	exit;
+}
+
+print(args.0 + ": " + tebas::getShared(args.0));

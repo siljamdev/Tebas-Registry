@@ -1,0 +1,15 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+if args.length != 1{
+	error("Expected 1 argument: 'license'");
+	exit;
+}
+
+if !tebasplugin::fileExists(args.0 + ".txt"){
+	error("License '" + args.0 + "' does not exist");
+	exit;
+}
+
+tebasplugin::fileDelete(args.0 + ".txt");

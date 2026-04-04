@@ -1,0 +1,27 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+print(getName() + " plugin help");
+print("");
+print("Scripts:");
+print("  init                       Inits a new git repository or reinitializes it (git init)");
+print("  status                     Shows repo status (git status)");
+print("  history                    Shows repo history (git log --oneline --graph --decorate)");
+print("  add                        Adds files to the current commit (git add <target>)");
+print("  commit <message>           Commits changes (git commit -m <message>)");
+print("  set-branch <branch>        Switches to a branch, creating it if necessary (git switch [-c] <branch>)");
+print("  set-remote <name> <url>    Sets or creates a remote (git remote add <name> <url>)");
+print("  list-remotes               See a list of remotes (git remote -v)");
+print("  push [remote]              Push current branch to remote. If there is only 1 remote, it can be omitted (git push <remote> <branch> --follow-tags)");
+print("  pull [remote]              Pulls current branch from remote. If there is only 1 remote, it can be omitted (git pull <remote> <branch> --rebase)");
+print("Globals:");
+print("  config <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  config-gitignore        Edit the default .gitignore file");
+print("  help                    This help menu");
+print("");
+print("This plugin will help you manage git repositories, remotes, and more");
+print("To make your template compatible with this plugin, implement as needed the following properties:");
+print("  git.defaultGitignore: Should return a table where each element is a line to add to the .gitignore file on init");
+print("  git.addTarget: Should return a single length table with the target to the git add command (git add <target>). Its almost always not necessary to be implemented (default value is -A)");
+print("  git.defaultBranch: Should return a single length table containg the name of the default branch to use on init. Its almost always not necessary to be implemented (default value is configurable)");

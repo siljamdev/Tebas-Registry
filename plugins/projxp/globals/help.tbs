@@ -1,0 +1,19 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " plugin help");
+print("");
+print("Globals:");
+print("  help                 This help menu");
+print("Scripts:");
+print("  list                 List all project resources keys");
+print("  get <key>            Get the value of a project resource");
+print("  set <key> <value>    Set the value of a project resource");
+print("");
+print("This plugin helps you navigate Tebas project resources");

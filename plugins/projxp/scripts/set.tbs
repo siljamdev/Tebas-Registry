@@ -1,0 +1,10 @@
+import stdlib;
+import tebas;
+import tebasproject;
+
+if args.length != 2{
+	error("Expected 2 arguments: 'key', 'value'");
+	exit;
+}
+
+tebasproject::setResource(args.0, args.1);

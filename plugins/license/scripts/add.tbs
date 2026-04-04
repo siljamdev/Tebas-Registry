@@ -1,0 +1,17 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+import tebasproject;
+
+if args.length != 1{
+	error("Expected 1 argument: 'license'");
+	exit;
+}
+
+if !tebasplugin::fileExists(args.0 + ".txt"){
+	error("License '" + args.0 + "' does not exist");
+	exit;
+}
+
+tab lines = tebasplugin::fileReadLines(args.0 + ".txt").replace(["$year$", "$author$"], [getDate().0, tebasplugin::getResource("author")]);
+tebasproject::fileWriteLines("LICENSE", lines);

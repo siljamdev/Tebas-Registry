@@ -1,0 +1,6 @@
+import tebasproject;
+import "utils.special";
+
+if !trySpecialDebug(args.0){
+	runScript("debug", args.0);
+}

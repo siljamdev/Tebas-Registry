@@ -1,0 +1,19 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebasplugin;
+import "utils.utils";
+
+if args.length != 1{
+	error("Expected 1 argument: 'branch'");
+	exit;
+}
+
+exitIfNotInit();
+
+if branchExists(args.0){
+	tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["switch", args.0]);
+}else{
+	tebasproject::runProcess(tebasplugin::getResource("gitPath"), "", ["switch", "-c", args.0]);
+}
