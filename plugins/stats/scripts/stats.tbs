@@ -12,8 +12,8 @@ tab lines = getProperty("stats.codeLines");
 
 if(lines.isNum()){
 	print("Lines of code in local project: " + lines);
+	tebasproject::runScript("stats", [lines]);
 }else{
 	print("Looks like there is no lines of code in this project...");
+	tebasproject::runScript("stats", ["0"]);
 }
-
-tebasproject::runScript("stats", []);

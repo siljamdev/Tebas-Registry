@@ -17,3 +17,5 @@ print("  help    This help menu");
 print("");
 print("To make your template compatible with this plugin, implement the following properties:");
 print("  stats.codeLines: Should return a stdnum num with the number of code lines in the project");
+print("Additionally, you can implement the following plugins:");
+print("  stats <num of lines>    Will be run when you run the stats script of this plugin. Takes as arg line num as a stdnum num");

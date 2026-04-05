@@ -31,5 +31,5 @@ export function branchExists(branch){
 
 export function getCurrentBranch(){
 	tab list = tebasproject::runProcessWithOutput(tebasplugin::getResource("gitPath"), "", ["branch", "--show-current"]);
-	return list.getTab(0);
+	return list.getTab(0).0;
 }

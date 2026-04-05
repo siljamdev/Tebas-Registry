@@ -13,7 +13,7 @@ addFile("unlicense");
 setAuthor();
 
 function addFile(license){
-	tebasplugin::fileWrite(license + ".txt", tebasplugin::getResource(license));
+	tebasplugin::fileWrite(license.lower() + ".txt", tebasplugin::getResource(license));
 }
 
 function setAuthor(){

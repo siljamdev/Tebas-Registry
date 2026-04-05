@@ -1,0 +1,130 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download Tebas
+        run: |
+          curl -L https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
+          chmod +x tebas
+
+      - name: Build templates
+        run: |
+          failed=0
+          mkdir -p built/templates
+          for dir in templates/*/; do
+            name=$(basename "$dir")
+            echo "Building template: $name"
+            ./tebas template build "$dir"
+            if [ $? -eq 0 ]; then
+              echo "  ✅ $name"
+              find "$dir" -maxdepth 1 -name "*.tbtem" -exec mv {} built/templates/ \;
+            else
+              echo "  ❌ $name"
+              failed=1
+            fi
+          done
+          exit $failed
+
+      - name: Upload built templates
+        uses: actions/upload-artifact@v6
+        with:
+          name: built-templates
+          path: built/templates/
+          if-no-files-found: warn
+
+  build-plugins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download Tebas
+        run: |
+          curl -L https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
+          chmod +x tebas
+
+      - name: Build plugins
+        run: |
+          failed=0
+          mkdir -p built/plugins
+          for dir in plugins/*/; do
+            name=$(basename "$dir")
+            echo "Building plugin: $name"
+            ./tebas plugin build "$dir"
+            if [ $? -eq 0 ]; then
+              echo "  ✅ $name"
+              find "$dir" -maxdepth 1 -name "*.tbplg" -exec mv {} built/plugins/ \;
+            else
+              echo "  ❌ $name"
+              failed=1
+            fi
+          done
+          exit $failed
+
+      - name: Upload built plugins
+        uses: actions/upload-artifact@v6
+        with:
+          name: built-plugins
+          path: built/plugins/
+          if-no-files-found: warn
+
+  publish:
+    needs: [build-templates, build-plugins]
+    if: github.event_name == 'push' && needs.build-templates.result == 'success' && needs.build-plugins.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download built templates
+        uses: actions/download-artifact@v8
+        with:
+          name: built-templates
+          path: built/templates/
+
+      - name: Download built plugins
+        uses: actions/download-artifact@v8
+        with:
+          name: built-plugins
+          path: built/plugins/
+
+      - name: Publish to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.${{github.run_number}}
+          name: v1.${{github.run_number}}
+          make_latest: true
+          files: |
+            built/templates/*
+            built/plugins/*
+          body: "Latest successfully built templates and plugins."
+
+  readme:
+    needs: [build-templates, build-plugins]
+    if: github.event_name == 'push' && needs.build-templates.result == 'success' && needs.build-plugins.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Generate README
+        run: |
+          chmod +x generate_readme.sh
+          ./generate_readme.sh
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add README.md
+          git diff --staged --quiet || git commit -m "Auto-generate README"
+          git push
