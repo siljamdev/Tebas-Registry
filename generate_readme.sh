@@ -6,6 +6,8 @@ cat > "$readme" << 'EOF'
 # Tebas Registry
 Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)
 
+---
+
 ## Templates
 EOF
 
