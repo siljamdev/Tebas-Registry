@@ -14,7 +14,7 @@ jobs:
 
       - name: Download Tebas
         run: |
-          curl -L https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
+          curl -fL https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
           chmod +x tebas
 
       - name: Build templates
@@ -49,7 +49,7 @@ jobs:
 
       - name: Download Tebas
         run: |
-          curl -L https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
+          curl -fL https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
           chmod +x tebas
 
       - name: Build plugins
