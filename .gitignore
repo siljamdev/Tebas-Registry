@@ -1,0 +1,15 @@
+/.tebas
+
+#OS files
+desktop.ini
+.DS_Store
+Thumbs.db
+
+#Logs
+*.log
+
+*.ps1
+*.tebas
+*.tbtem
+*.tbplg
+/README.md
