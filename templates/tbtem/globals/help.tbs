@@ -29,3 +29,4 @@ print("├──name.txt           : template name. Mandatory");
 print("├──author.txt         : template author");
 print("├──description.txt    : template description");
 print("├──properties.tbs     : properties code, include function `getProperty(key)`");
+print("├──KEEPRESOURCES      : if this file exists, the template will keep the previous resources when reinstalling it");

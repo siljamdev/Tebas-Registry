@@ -28,3 +28,4 @@ print("├──resources    : any files to be added as resources. Only the file
 print("├──name.txt           : plugin name. Mandatory");
 print("├──author.txt         : plugin author");
 print("├──description.txt    : plugin description");
+print("├──KEEPRESOURCES      : if this file exists, the plugin will keep the previous resources when reinstalling it");
