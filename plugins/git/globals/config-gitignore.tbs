@@ -1,7 +1,6 @@
 import stdlib;
 import tebas;
 import tebasplugin;
-import "utils.utils";
 import "utils.gitignore";
 
 ensureDefaultGitignoreExists();

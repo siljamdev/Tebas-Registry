@@ -24,10 +24,9 @@ jobs:
           for dir in templates/*/; do
             name=$(basename "$dir")
             echo "Building template: $name"
-            ./tebas template build "$dir"
+            ./tebas template build "$dir" "built/templates"
             if [ $? -eq 0 ]; then
               echo "  ✅ $name"
-              find "$dir" -maxdepth 1 -name "*.tbtem" -exec mv {} built/templates/ \;
             else
               echo "  ❌ $name"
               failed=1
@@ -59,10 +58,9 @@ jobs:
           for dir in plugins/*/; do
             name=$(basename "$dir")
             echo "Building plugin: $name"
-            ./tebas plugin build "$dir"
+            ./tebas plugin build "$dir" "built/plugins"
             if [ $? -eq 0 ]; then
               echo "  ✅ $name"
-              find "$dir" -maxdepth 1 -name "*.tbplg" -exec mv {} built/plugins/ \;
             else
               echo "  ❌ $name"
               failed=1
@@ -97,11 +95,19 @@ jobs:
           name: built-plugins
           path: built/plugins/
 
+      - name: Get Tebas version
+        id: version
+        run: |
+          VERSION=$(curl -fL -H "User-Agent: TebasRegistry" \
+            https://api.github.com/repos/siljamdev/Tebas/releases/latest \
+            | grep '"tag_name"' | sed 's/.*"tag_name": *"\(.*\)".*/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Publish to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.${{github.run_number}}
-          name: v1.${{github.run_number}}
+          tag_name: ${{steps.version.outputs.version}}-${{github.run_number}}
+          name: ${{steps.version.outputs.version}}-${{github.run_number}}
           make_latest: true
           files: |
             built/templates/*

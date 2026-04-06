@@ -7,6 +7,9 @@ if args.length != 0{
 	exit;
 }
 
+//Cleanup
+tebas::projectsCleanup();
+
 tab projects = getAllProjectsPaths();
 tab unsorted;
 

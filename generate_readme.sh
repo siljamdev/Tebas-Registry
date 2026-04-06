@@ -8,7 +8,7 @@ Official template & plugin registry for [Tebas](https://github.com/siljamdev/Teb
 
 ---
 
-## Templates
+## Available Templates
 EOF
 
 for dir in templates/*/; do
@@ -23,7 +23,7 @@ for dir in templates/*/; do
 done
 
 echo "" >> "$readme"
-echo "## Plugins" >> "$readme"
+echo "## Available Plugins" >> "$readme"
 
 for dir in plugins/*/; do
     folder=$(basename "$dir")
