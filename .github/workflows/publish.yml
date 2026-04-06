@@ -101,6 +101,7 @@ jobs:
           VERSION=$(curl -fL -H "User-Agent: TebasRegistry" \
             https://api.github.com/repos/siljamdev/Tebas/releases/latest \
             | grep '"tag_name"' | sed 's/.*"tag_name": *"\(.*\)".*/\1/')
+          echo $VERSION
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Publish to release
@@ -109,6 +110,7 @@ jobs:
           tag_name: ${{steps.version.outputs.version}}-${{github.run_number}}
           name: ${{steps.version.outputs.version}}-${{github.run_number}}
           make_latest: true
+          target_commitish: ${{github.sha}}
           files: |
             built/templates/*
             built/plugins/*
