@@ -6,6 +6,9 @@ cat > "$readme" << 'EOF'
 # Tebas Registry
 Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)
 
+## Contributing
+Before making a PR, execute `build.sh` with the latest tebas version installed and make sure all templates and plugins succesfully build
+
 ---
 
 ## Available Templates

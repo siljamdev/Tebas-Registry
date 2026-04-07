@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build-templates:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -20,6 +20,7 @@ jobs:
       - name: Build templates
         run: |
           failed=0
+          
           mkdir -p built/templates
           for dir in templates/*/; do
             name=$(basename "$dir")
@@ -32,28 +33,7 @@ jobs:
               failed=1
             fi
           done
-          exit $failed
-
-      - name: Upload built templates
-        uses: actions/upload-artifact@v6
-        with:
-          name: built-templates
-          path: built/templates/
-          if-no-files-found: warn
-
-  build-plugins:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Download Tebas
-        run: |
-          curl -fL https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
-          chmod +x tebas
-
-      - name: Build plugins
-        run: |
-          failed=0
+          
           mkdir -p built/plugins
           for dir in plugins/*/; do
             name=$(basename "$dir")
@@ -66,40 +46,45 @@ jobs:
               failed=1
             fi
           done
+          
           exit $failed
 
-      - name: Upload built plugins
+      - name: Upload built files
         uses: actions/upload-artifact@v6
         with:
-          name: built-plugins
-          path: built/plugins/
+          name: built
+          path: |
+            built/templates/
+            built/plugins/
           if-no-files-found: warn
 
   publish:
-    needs: [build-templates, build-plugins]
-    if: github.event_name == 'push' && needs.build-templates.result == 'success' && needs.build-plugins.result == 'success'
+    needs: [build]
+    if: github.event_name == 'push' && needs.build.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     steps:
-      - name: Download built templates
+      - name: Download built files
         uses: actions/download-artifact@v8
         with:
-          name: built-templates
-          path: built/templates/
-
-      - name: Download built plugins
-        uses: actions/download-artifact@v8
-        with:
-          name: built-plugins
-          path: built/plugins/
+          name: built
+          path: built/
+      
+      - name: Get Tebas version
+        id: version
+        run: |
+          VERSION=$(curl -fL -H "User-Agent: TebasRegistry" \
+            https://api.github.com/repos/siljamdev/Tebas/releases/latest \
+            | grep '"tag_name"' | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Publish to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.${{github.run_number}}
-          name: v1.${{github.run_number}}
+          tag_name: ${{steps.version.outputs.version}}-${{github.run_number}}
+          name: ${{steps.version.outputs.version}}-${{github.run_number}}
           make_latest: true
           files: |
             built/templates/*
