@@ -93,7 +93,7 @@ jobs:
 
   readme:
     needs: [build]
-    if: github.event_name == 'push' && needs.build-templates.result == 'success' && needs.build-plugins.result == 'success'
+    if: github.event_name == 'push' && needs.build.result == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: write
