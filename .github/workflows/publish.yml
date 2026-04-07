@@ -92,7 +92,7 @@ jobs:
           body: "Latest successfully built templates and plugins."
 
   readme:
-    needs: [build-templates, build-plugins]
+    needs: [build]
     if: github.event_name == 'push' && needs.build-templates.result == 'success' && needs.build-plugins.result == 'success'
     runs-on: ubuntu-latest
     permissions:
