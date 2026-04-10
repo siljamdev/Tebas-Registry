@@ -6,7 +6,7 @@ print(getName() + " plugin help");
 print("");
 print("Scripts:");
 print("  init                       Inits a new git repository or reinitializes it (git init)");
-print("  status                     Shows repo status (git status)");
+print("  status                     Shows repo status (git status -sb)");
 print("  history                    Shows repo history (git log --oneline --graph --decorate)");
 print("  add                        Adds files to the current commit (git add <target>)");
 print("  commit <message>           Commits changes (git commit -m <message>)");
