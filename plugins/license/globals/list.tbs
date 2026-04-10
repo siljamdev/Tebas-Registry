@@ -1,4 +1,5 @@
 import stdlib;
+import paths;
 import tebas;
 import tebasplugin;
 
@@ -12,5 +13,5 @@ tab all = tebasplugin::folderListFiles("", "*.txt");
 print("Available licenses:");
 
 foreach l @ all{
-	print("  " + getPathFilenameNoExtension(l));
+	print("  " + getFilenameNoExtension(l));
 }

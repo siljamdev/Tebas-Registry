@@ -1,0 +1,12 @@
+import stdlib;
+import tebas;
+import tebasproject;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+if !tebasproject::fileExists("KEEPRESOURCES"){
+	tebasproject::fileWrite("KEEPRESOURCES", "");
+}

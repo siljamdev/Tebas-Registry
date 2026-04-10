@@ -21,5 +21,5 @@ export function getAllRemotes(){
 
 export function existsRemote(remote){
 	tab exitCode = tebasproject::runProcessWithExitCode(tebasplugin::getResource("gitPath"), "", ["remote", "get-url", remote]);
-	return exitCode == 0;
+	return exitCode == "0";
 }

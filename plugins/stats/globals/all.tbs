@@ -1,5 +1,6 @@
 import stdlib;
 import stdnum;
+import paths;
 import tebas;
 
 if args.length != 0{
@@ -22,10 +23,10 @@ foreach proj @ projects{
 	
 	tab lines = getProjectProperty(proj, "stats.codeLines");
 	if(lines.isNum()){
-		unsorted += [getPathFilename(proj), lines];
+		unsorted += [getFilename(proj), lines];
 		totalLines = sum(totalLines, lines);
 	}else{
-		unsorted += [getPathFilename(proj), "0"];
+		unsorted += [getFilename(proj), "0"];
 	}
 }
 

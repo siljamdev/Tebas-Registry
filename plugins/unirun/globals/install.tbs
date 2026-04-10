@@ -5,6 +5,7 @@ import tebasplugin;
 tab pr = tebasplugin::getResource("browserPath");
 if pr.trim()% > 0{
 	print("Browser executable path gotten from previous plugin resources");
+	testProcess(pr);
 	exit;
 }
 
@@ -12,9 +13,23 @@ tab sr = getShared("paths.browser");
 if sr.trim()% > 0{
 	tebasplugin::setResource("browserPath", sr);
 	print("Browser executable path gotten from shared resources");
+	testProcess(sr);
 	exit;
 }
 
 tab m = input("Enter a browser executable path: ").removeQuotes();
 tebasplugin::setResource("browserPath", m);
-setShared("paths.browser", m);
+if testProcess(m){
+	setShared("paths.browser", m);
+}
+
+function testProcess(path){
+	tab num = tebasplugin::runProcessWithExitCode(path, "", ["-h"]);
+	
+	if num.length == 0{
+		error("'" + path + "' does not seem to be a runnable process");
+		return 0;
+	}
+	
+	return 1;
+}

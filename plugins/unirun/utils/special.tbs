@@ -1,9 +1,10 @@
 import stdlib;
+import paths;
 import tebas;
 import tebasplugin;
 
 export function trySpecialRun(file){
-	if(getPathExtension(file).upper() == ".HTML"){
+	if(getExtension(file).upper() == ".HTML"){
 		return tebasplugin::runProcess(tebasplugin::getResource("browserPath"), "", file);
 	}
 }

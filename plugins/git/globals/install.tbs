@@ -14,6 +14,7 @@ function gitPath(){
 	tab pr = tebasplugin::getResource("gitPath");
 	if pr.trim()% > 0{
 		print("Git executable path gotten from previous plugin resources");
+		testProcess(pr);
 		return;
 	}
 	
@@ -21,10 +22,24 @@ function gitPath(){
 	if sr.trim()% > 0{
 		tebasplugin::setResource("gitPath", sr);
 		print("Git executable path gotten from shared resources");
+		testProcess(sr);
 		return;
 	}
 	
 	tab m = input("Enter git executable path: ").removeQuotes();
 	tebasplugin::setResource("gitPath", m);
-	setShared("paths.git", m);
+	if testProcess(m){
+		setShared("paths.git", m);
+	}
+}
+
+function testProcess(path){
+	tab num = tebasplugin::runProcessWithExitCode(path, "", ["-h"]);
+	
+	if num.length == 0{
+		error("'" + path + "' does not seem to be a runnable process");
+		return 0;
+	}
+	
+	return 1;
 }

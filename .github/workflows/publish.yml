@@ -17,7 +17,7 @@ jobs:
           curl -fL https://github.com/siljamdev/Tebas/releases/latest/download/tebas_linux-x64 -o tebas
           chmod +x tebas
 
-      - name: Build templates
+      - name: Build
         run: |
           failed=0
           
@@ -89,7 +89,7 @@ jobs:
           files: |
             built/templates/*
             built/plugins/*
-          body: "Latest successfully built templates and plugins."
+          body: "Latest successfully built templates and plugins for Tebas version ${{steps.version.outputs.version}}."
 
   readme:
     needs: [build]

@@ -26,7 +26,7 @@ export function getInitialBranch(){
 export function branchExists(branch){
 	tab sc = "refs/heads/" + branch;
 	tab exitCode = tebasproject::runProcessWithExitCode(tebasplugin::getResource("gitPath"), "", ["rev-parse", "--verify", sc^]);
-	return exitCode == 0;
+	return exitCode == "0";
 }
 
 export function getCurrentBranch(){

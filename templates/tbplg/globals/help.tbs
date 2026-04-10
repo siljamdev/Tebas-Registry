@@ -14,6 +14,7 @@ print("  build         Builds the plugin");
 print("  run           Builds the plugin");
 print("  install       Installs the plugin if it has been built");
 print("  add-config    Adds a default config global script, ready to be filled with the needed values to operate");
+print("  add-kr        Adds en empty KEEPRESOURCES file");
 print("Globals:");
 print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
 print("  help                     This help menu");
