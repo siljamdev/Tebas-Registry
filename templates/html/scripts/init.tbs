@@ -1,0 +1,19 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+tab files = tebasproject::folderListFiles("", "*.html");
+if files.length > 0{
+	exit;
+}
+
+createFile("index.html", tebastemplate::getResource("index"));
+createFile("style.css", tebastemplate::getResource("style"));
+createFile("script.js", tebastemplate::getResource("script"));
+
+function createFile(path, content){
+	if(!tebasproject::fileExists(path)){
+		tebasproject::fileWrite(path, content);
+	}
+}

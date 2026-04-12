@@ -1,6 +1,6 @@
 import tebasproject;
-import "utils.special";
+import tebasplugin;
 
-if !trySpecialBuild(args.0){
-	runScript("build", args.0);
+if !runScript("build", args.0){
+	tebasplugin::runGlobal("build", args.0);
 }

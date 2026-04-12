@@ -12,6 +12,7 @@ print("  add                        Adds files to the current commit (git add <t
 print("  commit <message>           Commits changes (git commit -m <message>)");
 print("  set-branch <branch>        Switches to a branch, creating it if necessary (git switch [-c] <branch>)");
 print("  set-remote <name> <url>    Sets or creates a remote (git remote add <name> <url>)");
+print("  rm-remote <name>           Removes a remote (git remote remove <name>)");
 print("  list-remotes               See a list of remotes (git remote -v)");
 print("  push [remote]              Push current branch to remote. If there is only 1 remote, it can be omitted (git push <remote> <branch> --follow-tags)");
 print("  pull [remote]              Pulls current branch from remote. If there is only 1 remote, it can be omitted (git pull <remote> <branch> --rebase)");

@@ -1,4 +1,7 @@
+import stdlib;
+import paths;
 import tebasplugin;
-import "utils.special";
 
-trySpecialRun(args.0);
+if(getExtension(args.0).lower() == ".html"){
+	tebasplugin::runProcess(tebasplugin::getResource("browserPath"), "", args.0);
+}

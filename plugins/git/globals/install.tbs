@@ -12,14 +12,14 @@ function gitignoreFile(){
 
 function gitPath(){
 	tab pr = tebasplugin::getResource("gitPath");
-	if pr.trim()% > 0{
+	if pr > 0{
 		print("Git executable path gotten from previous plugin resources");
 		testProcess(pr);
 		return;
 	}
 	
 	tab sr = getShared("paths.git");
-	if sr.trim()% > 0{
+	if sr > 0{
 		tebasplugin::setResource("gitPath", sr);
 		print("Git executable path gotten from shared resources");
 		testProcess(sr);

@@ -3,14 +3,14 @@ import tebas;
 import tebasplugin;
 
 tab pr = tebasplugin::getResource("browserPath");
-if pr.trim()% > 0{
+if pr > 0{
 	print("Browser executable path gotten from previous plugin resources");
 	testProcess(pr);
 	exit;
 }
 
 tab sr = getShared("paths.browser");
-if sr.trim()% > 0{
+if sr > 0{
 	tebasplugin::setResource("browserPath", sr);
 	print("Browser executable path gotten from shared resources");
 	testProcess(sr);

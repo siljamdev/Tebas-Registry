@@ -1,0 +1,18 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+import tebasproject;
+
+if args.length == 1{
+	tebasproject::runProcess(tebastemplate::getResource("browserPath"), "", args.0);
+}else if args.length == 0{
+	tab files = tebasproject::folderListFiles("", "*.html");
+	if files > 0{
+		tab path = tebasproject::getPath() + "/" + files.0;
+		tebasproject::runProcess(tebastemplate::getResource("browserPath"), "", path^);
+	}else{
+		error("No html files found for running");
+	}
+}else{
+	error("Expected 0 arguments");
+}
