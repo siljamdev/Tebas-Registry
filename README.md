@@ -7,6 +7,7 @@ Before making a PR, execute `build.sh` with the latest tebas version installed a
 ---
 
 ## Available Templates
+- [html](./templates/html): Template that helps you create web projects with html files.
 - [tbplg](./templates/tbplg): Template that helps you create Tebas plugins
 - [tbtem](./templates/tbtem): Template that helps you create Tebas templates
 
