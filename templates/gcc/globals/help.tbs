@@ -1,0 +1,21 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " template help");
+print("");
+print("Scripts:");
+print("  run                  Runs the project if build succeeds");
+print("  debug                Runs the project and waits for user input if build succeeds");
+print("  build                Builds the project");
+print("  publish <version>    Builds the project into the releases folder");
+print("Globals:");
+print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                     This help menu");
+print("");
+print("This template is used with gcc compiler to compile c projects. It will compile all c files to the bin folder on normal run, and will compile into the release folder when publishing");

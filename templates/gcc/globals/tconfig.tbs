@@ -1,10 +1,10 @@
 import stdlib;
 import tebas;
-import tebasplugin;
+import tebastemplate;
 
-tab validKeys = []; //List of valid configurable keys
+tab validKeys = ["gccPath"]; //List of valid configurable keys
 tab trueFalseKeys = []; //Add here keys that can only take true/false values
-tab keysDescription = []; //In the same order as validKeys
+tab keysDescription = ["Path to GCC executable"]; //In the same order as validKeys
 
 if args.length == 1{
 	if args.0 == "list"{
@@ -18,7 +18,7 @@ if args.length == 1{
 	}else if args.0 == "see"{
 		print("Current config:");
 		foreach key @ validKeys{
-			print("  " + key + ": " + tebasplugin::getResource(key));
+			print("  " + key + ": " + tebastemplate::getResource(key));
 		}
 		exit;
 	}
@@ -48,4 +48,4 @@ if args.0 @ trueFalseKeys{
 	}
 }
 
-tebasplugin::setResource(args.0, args.1);
+tebastemplate::setResource(args.0, args.1);

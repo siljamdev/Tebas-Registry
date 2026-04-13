@@ -10,13 +10,11 @@ export function getProperty(key){
 	if key == "stats.codeLines"{
 		tab total = "0";
 		
-		tab files = tebasproject::folderListChildFiles("", "*.html");
-		files += tebasproject::folderListChildFiles("", "*.css");
-		files += tebasproject::folderListChildFiles("", "*.js");
-		files += tebasproject::folderListChildFiles("", "*.ts");
+		tab files = tebasproject::folderListChildFiles("", "*.c");
+		files += tebasproject::folderListChildFiles("", "*.h");
 		
 		foreach file @ files{
-			if file%[0,5]^ == ".git/"{
+			if file%[0,4]^ == "bin/" | file%[0,5]^ == ".git/" | file%[0,9]^ == "releases/"{
 				continue;
 			}
 			

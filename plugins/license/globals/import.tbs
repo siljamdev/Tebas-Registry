@@ -18,9 +18,9 @@ copyOutside(args.1, args.0 + ".txt");
 
 function copyOutside(path, inpath){
 	if(stdlib::getOS() == "windows"){
-		tab p = tebasplugin::getPath().replace("/", "\\") + "\\" + inpath;
-		tebasplugin::runProcess("C:\\Windows\\System32\\cmd.exe", "", ["/c", "copy", "/Y", path, p^]);
+		//tab p = tebasplugin::getPath().replace("/", "\\") + "\\" + inpath;
+		tebasplugin::runProcess("cmd", "", ["/c", "copy", "/Y", path, inpath^]);
 	}else{
-		tebasplugin::runProcess("cp", "", [path, (tebasplugin::getPath() + "/" + inpath)^]);
+		tebasplugin::runProcess("cp", "", [path, inpath^]);
 	}
 }

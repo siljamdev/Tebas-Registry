@@ -1,0 +1,24 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+if args.length != 1{
+	error("Expected 1 argument: 'version'");
+	exit;
+}
+
+if tebasproject::folderExists("releases/" + args.0){
+	tab ans = input("That version already exists. Do you want to override it? [Y/N] ").lower();
+	if ans != "yes" & ans != "y"{
+		exit;
+	}
+	tebasproject::folderDelete("releases/" + args.0);
+}
+
+tab files = tebasproject::folderListFiles("", "*.c");
+
+tebasproject::folderCreate("releases/" + args.0);
+
+tab out = "releases/" + args.0 + "/" + tebasproject::getName();
+tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + ["-o", out^]);

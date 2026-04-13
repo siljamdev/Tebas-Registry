@@ -10,6 +10,8 @@ print("  debug [file]    Debug the project");
 print("  build [file]    Build the project");
 print("Globals:");
 print("  run <file>              Attempt to run a runnable file");
+print("  debug <file>            Attempt to debug a debuggable file");
+print("  build <file>            Attempt to build a debuggable file");
 print("  config <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
 print("  help                    This help menu");
 print("");

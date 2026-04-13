@@ -27,7 +27,7 @@ if testProcess(m){
 }
 
 function testProcess(path){
-	tab num = tebastemplate::runProcessWithExitCode(path, "", ["-h"]);
+	tab num = tebastemplate::runProcessSilent(path, "", ["-h"]);
 	
 	if num.length == 0{
 		error("'" + path + "' does not seem to be a runnable process");

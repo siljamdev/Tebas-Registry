@@ -1,0 +1,38 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+//Previous template resources
+tab pr = tebastemplate::getResource("gccPath");
+if pr > 0{
+	print("GCC executable path gotten from previous template resources");
+	testProcess(pr);
+	exit;
+}
+
+//Shared resources
+tab sr = tebas::getShared("paths.gcc");
+if sr > 0{
+	tebastemplate::setResource("gccPath", sr);
+	print("GCC executable path gotten from shared resources");
+	testProcess(sr);
+	exit;
+}
+
+//User input
+tab m = input("Enter GCC executable path: ").removeQuotes();
+tebastemplate::setResource("gccPath", m);
+if testProcess(m){
+	tebas::setShared("paths.gcc", m); //Only save if it was succesfully tested
+}
+
+function testProcess(path){
+	tab num = tebastemplate::runProcessSilent(path, "", ["-h"]);
+	
+	if num.length == 0{
+		error("'" + path + "' does not seem to be a runnable process");
+		return 0;
+	}
+	
+	return 1;
+}

@@ -1,0 +1,21 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+import "scripts.build";
+
+if build(){
+	runAndWait();
+}
+
+function runAndWait(){
+	tab isWin = getOS() == "windows";
+	
+	if isWin{
+		tab path = tebasproject::getName() + ".exe";
+		tebasproject::runProcessDetached("cmd", "bin/", ["/c", path^, "&", "echo.", "&", "pause"]);
+	}else{
+		tab command = "./" + tebasproject::getName() + "; echo; read -p 'Press enter to continue...'";
+		tebasproject::runProcessDetached("sh", "bin/", ["-c", command^]);
+	}
+}

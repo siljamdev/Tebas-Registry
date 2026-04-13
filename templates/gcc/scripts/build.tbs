@@ -1,0 +1,15 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+build();
+
+export function build(){
+	tab files = tebasproject::folderListFiles("", "*.c");
+	
+	tab out = "bin/" + tebasproject::getName();
+	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + ["-o", out^]);
+	
+	return exitCode == "0";
+}

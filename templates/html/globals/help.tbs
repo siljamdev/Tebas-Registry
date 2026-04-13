@@ -13,6 +13,6 @@ print("Scripts:");
 print("  run [file]    Runs the web page in the browser");
 print("Globals:");
 print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
-print("  help    This help menu");
+print("  help                     This help menu");
 print("");
 print("This template helps you with local web page development (html files)");
