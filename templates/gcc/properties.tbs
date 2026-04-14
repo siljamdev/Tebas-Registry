@@ -14,12 +14,16 @@ export function getProperty(key){
 		files += tebasproject::folderListChildFiles("", "*.h");
 		
 		foreach file @ files{
-			if file%[0,4]^ == "bin/" | file%[0,5]^ == ".git/" | file%[0,9]^ == "releases/"{
+			if file%[0,4]^ == "bin/" | file%[0,9]^ == "releases/"{
 				continue;
 			}
 			
 			total = sum(total, max("0", tebasproject::fileReadLines(file).length.toNum()));
 		}
 		return total;
+	}
+	
+	if(key == "git.defaultGitignore"){
+		return tebastemplate::getResource("gitignore").splitLines();
 	}
 }

@@ -18,7 +18,7 @@ export function getProperty(key){
 	}
 	
 	if(key == "git.defaultGitignore"){
-		return tebastemplate::getResource("gitignore").replace("$name", tebastemplate::getName()).splitLines();
+		return tebastemplate::getResource("gitignore").splitLines();
 	}
 }
 
