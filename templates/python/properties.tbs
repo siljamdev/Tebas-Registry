@@ -10,8 +10,7 @@ export function getProperty(key){
 	if key == "stats.codeLines"{
 		tab total = "0";
 		
-		tab files = tebasproject::folderListChildFiles("src", "*.c");
-		files += tebasproject::folderListChildFiles("include", "*.h");
+		tab files = tebasproject::folderListChildFiles(tebasproject::getName(), "*.py");
 		
 		foreach file @ files{
 			total = sum(total, max("0", tebasproject::fileReadLines(file).length.toNum()));

@@ -6,10 +6,28 @@ import tebastemplate;
 build();
 
 export function build(){
-	tab files = tebasproject::folderListFiles("", "*.c");
+	tab files = tebasproject::folderListChildFiles("src", "*.c");
 	
 	tab out = "bin/" + tebasproject::getName();
-	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + ["-o", out^]);
+	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + "-Iinclude" + "-o" + out^);
 	
 	return exitCode == "0";
+}
+
+export function buildDebug(){
+	tab files = tebasproject::folderListChildFiles("src", "*.c");
+	
+	tab out = "bin/" + tebasproject::getName();
+	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + "-Iinclude" + "-g" + "-o" + out^);
+	
+	return exitCode == "0";
+}
+
+export function buildPublish(version){
+	tab files = tebasproject::folderListChildFiles("src", "*.c");
+	
+	tebasproject::folderCreate("releases/" + version);
+	
+	tab out = "releases/" + version + "/" + tebasproject::getName();
+	tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + "-Iinclude" + "-o" + out^);
 }

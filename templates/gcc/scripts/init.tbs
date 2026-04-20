@@ -3,12 +3,14 @@ import tebas;
 import tebasproject;
 import tebastemplate;
 
-tab files = tebasproject::folderListFiles("", "*.c");
-if files.length <= 0{
-	if(!tebasproject::fileExists("main.c")){
-		tebasproject::fileWrite("main.c", tebastemplate::getResource("program"));
-	}
-}
-
+tebasproject::folderCreate("src");
+tebasproject::folderCreate("include");
 tebasproject::folderCreate("bin");
 tebasproject::folderCreate("releases");
+
+tab files = tebasproject::folderListChildFiles("src", "*.c");
+if files.length <= 0{
+	if !tebasproject::fileExists("src/main.c"){
+		tebasproject::fileWrite("src/main.c", tebastemplate::getResource("program"));
+	}
+}

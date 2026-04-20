@@ -7,5 +7,9 @@ import "scripts.build";
 
 if build(){
 	tab isWin = getOS() == "windows";
-	tebasproject::runProcessDetached(tebasproject::getPath() + "/bin/" + tebasproject::getName() + (isWin ? ".exe" : ""), "bin/", []);
+	if tebastemplate::getResource("runDetached") == "true"{
+		tebasproject::runProcessDetached(tebasproject::getPath() + "/bin/" + tebasproject::getName() + (isWin ? ".exe" : ""), "bin/", []);
+	}else{
+		tebasproject::runProcess(tebasproject::getPath() + "/bin/" + tebasproject::getName() + (isWin ? ".exe" : ""), "bin/", []);
+	}
 }

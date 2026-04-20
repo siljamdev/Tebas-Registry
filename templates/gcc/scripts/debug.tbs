@@ -4,18 +4,38 @@ import tebasproject;
 import tebastemplate;
 import "scripts.build";
 
-if build(){
+if buildDebug(){
 	runAndWait();
 }
 
 function runAndWait(){
 	tab isWin = getOS() == "windows";
 	
-	if isWin{
-		tab path = tebasproject::getName() + ".exe";
-		tebasproject::runProcessDetached("cmd", "bin/", ["/c", path^, "&", "echo.", "&", "pause"]);
+	if tebastemplate::getResource("useGdb") == "true"{
+		if tebastemplate::getResource("runDetached") == "true"{
+			if isWin{
+				tab path = "./" + tebasproject::getName() + ".exe";
+				tebasproject::runProcessDetached(tebastemplate::getResource("gdbPath"), "bin/", [path^, "-ex", "run"]);
+			}else{
+				tab path = "./" + tebasproject::getName();
+				tebasproject::runProcessDetached(tebastemplate::getResource("gdbPath"), "bin/", [path^, "-ex", "run"]);
+			}
+		}else{
+			tab path = "./" + tebasproject::getName() + (isWin ? ".exe" : "");
+			tebasproject::runProcess(tebastemplate::getResource("gdbPath"), "bin/", [path^, "-ex", "run"]);
+		}
 	}else{
-		tab command = "./" + tebasproject::getName() + "; echo; read -p 'Press enter to continue...'";
-		tebasproject::runProcessDetached("sh", "bin/", ["-c", command^]);
+		if tebastemplate::getResource("runDetached") == "true"{
+			if isWin{
+				tab path = "./" + tebasproject::getName() + ".exe";
+				tebasproject::runProcessDetached("cmd", "bin/", ["/c", path^, "&", "echo.", "&", "pause"]);
+			}else{
+				tab command = "\"./" + tebasproject::getName() + "\"; echo; read -p 'Press enter to continue...'";
+				tebasproject::runProcessDetached("sh", "bin/", ["-c", command^]);
+			}
+		}else{
+			tebasproject::runProcess(tebasproject::getPath() + "/bin/" + tebasproject::getName() + (isWin ? ".exe" : ""), "bin/", []);
+			input("Press enter to continue...");
+		}
 	}
 }

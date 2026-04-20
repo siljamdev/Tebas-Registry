@@ -1,0 +1,42 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+python();
+
+function python(){
+	//Previous template resources
+	tab pr = tebastemplate::getResource("pythonPath");
+	if pr > 0{
+		print("python executable path gotten from previous template resources");
+		testProcess(pr);
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths.python");
+	if sr > 0{
+		tebastemplate::setResource("pythonPath", sr);
+		print("python executable path gotten from shared resources");
+		testProcess(sr);
+		return;
+	}
+	
+	//User input
+	tab m = input("Enter python executable path: ").removeQuotes();
+	tebastemplate::setResource("pythonPath", m);
+	if testProcess(m){
+		tebas::setShared("paths.python", m); //Only save if it was succesfully tested
+	}
+}
+
+function testProcess(path){
+	tab num = tebastemplate::runProcessSilent(path, "", ["-h"]);
+	
+	if num.length == 0{
+		error("'" + path + "' does not seem to be a runnable process");
+		return 0;
+	}
+	
+	return 1;
+}

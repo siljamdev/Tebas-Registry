@@ -1,0 +1,17 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+tebasproject::folderCreate(tebasproject::getName());
+
+tab files = tebasproject::folderListChildFiles(tebasproject::getName(), "*.py");
+if files.length <= 0{
+	if !tebasproject::fileExists(tebasproject::getName() + "/__main__.py"){
+		tebasproject::fileWrite(tebasproject::getName() + "/__main__.py", tebastemplate::getResource("main"));
+	}
+}
+
+if !tebasproject::fileExists("pyproject.toml"){
+	tebasproject::fileWrite("pyproject.toml", tebastemplate::getResource("pyproject").replace(["$name$"], [tebasproject::getName()]));
+}

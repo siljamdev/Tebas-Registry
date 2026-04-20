@@ -2,28 +2,59 @@ import stdlib;
 import tebas;
 import tebastemplate;
 
-//Previous template resources
-tab pr = tebastemplate::getResource("gccPath");
-if pr > 0{
-	print("GCC executable path gotten from previous template resources");
-	testProcess(pr);
-	exit;
+gcc();
+gdb();
+
+function gcc(){
+	//Previous template resources
+	tab pr = tebastemplate::getResource("gccPath");
+	if pr > 0{
+		print("GCC executable path gotten from previous template resources");
+		testProcess(pr);
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths.gcc");
+	if sr > 0{
+		tebastemplate::setResource("gccPath", sr);
+		print("GCC executable path gotten from shared resources");
+		testProcess(sr);
+		return;
+	}
+	
+	//User input
+	tab m = input("Enter GCC executable path: ").removeQuotes();
+	tebastemplate::setResource("gccPath", m);
+	if testProcess(m){
+		tebas::setShared("paths.gcc", m); //Only save if it was succesfully tested
+	}
 }
 
-//Shared resources
-tab sr = tebas::getShared("paths.gcc");
-if sr > 0{
-	tebastemplate::setResource("gccPath", sr);
-	print("GCC executable path gotten from shared resources");
-	testProcess(sr);
-	exit;
-}
-
-//User input
-tab m = input("Enter GCC executable path: ").removeQuotes();
-tebastemplate::setResource("gccPath", m);
-if testProcess(m){
-	tebas::setShared("paths.gcc", m); //Only save if it was succesfully tested
+function gdb(){
+	//Previous template resources
+	tab pr = tebastemplate::getResource("gdbPath");
+	if pr > 0{
+		print("GDB executable path gotten from previous template resources");
+		testProcess(pr);
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths.gdb");
+	if sr > 0{
+		tebastemplate::setResource("gdbPath", sr);
+		print("GDB executable path gotten from shared resources");
+		testProcess(sr);
+		return;
+	}
+	
+	//User input
+	tab m = input("Enter GDB executable path: ").removeQuotes();
+	tebastemplate::setResource("gdbPath", m);
+	if testProcess(m){
+		tebas::setShared("paths.gdb", m); //Only save if it was succesfully tested
+	}
 }
 
 function testProcess(path){

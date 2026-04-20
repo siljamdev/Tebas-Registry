@@ -1,0 +1,10 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+if tebastemplate::getResource("runDetached") == "true"{
+	tebasproject::runProcessDetached(tebastemplate::getResource("pythonPath"), "", ["-m", tebasproject::getName()]);
+}else{
+	tebasproject::runProcess(tebastemplate::getResource("pythonPath"), "", ["-m", tebasproject::getName()]);
+}

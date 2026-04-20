@@ -1,0 +1,20 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " template help");
+print("");
+print("Scripts:");
+print("  run      Runs the project");
+print("  debug    Debugs the project using PDB");
+print("Globals:");
+print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                     This help menu");
+print("");
+print("This template is used with the python executable to create python projects");
+print("All source code .py files are supposed to go in a folder called the same way as the module");

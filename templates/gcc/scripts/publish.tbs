@@ -2,6 +2,7 @@ import stdlib;
 import tebas;
 import tebasproject;
 import tebastemplate;
+import "scripts.build";
 
 if args.length != 1{
 	error("Expected 1 argument: 'version'");
@@ -16,9 +17,4 @@ if tebasproject::folderExists("releases/" + args.0){
 	tebasproject::folderDelete("releases/" + args.0);
 }
 
-tab files = tebasproject::folderListFiles("", "*.c");
-
-tebasproject::folderCreate("releases/" + args.0);
-
-tab out = "releases/" + args.0 + "/" + tebasproject::getName();
-tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + ["-o", out^]);
+buildPublish(args.0);
