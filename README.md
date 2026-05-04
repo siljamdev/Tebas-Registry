@@ -1,7 +1,7 @@
 # Tebas Registry
 Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)  
-
-Built for Tebas v1.0.0-beta-5
+Built for Tebas v1.0.0  
+Download files from the [Releases](https://github.com/siljamdev/Tebas-Registry/releases/latest)
 
 ## Contributing
 Before making a PR, run `build.sh` with the latest tebas version installed and make sure all templates and plugins succesfully build  
