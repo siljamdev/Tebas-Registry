@@ -3,6 +3,7 @@ import tebas;
 import tebastemplate;
 
 python();
+unirun();
 
 function python(){
 	//Previous template resources
@@ -39,4 +40,11 @@ function testProcess(path){
 	}
 	
 	return 1;
+}
+
+function unirun(){
+	if tebas::pluginInstalled("unirun"){
+		tebas::pluginRunGlobal("unirun", "set-runnable", ["py", ("template " + tebastemplate::getName() + " run $")^]);
+		tebas::pluginRunGlobal("unirun", "set-debuggable", ["py", ("template " + tebastemplate::getName() + " debug $")^]);
+	}
 }

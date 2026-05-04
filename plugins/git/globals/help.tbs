@@ -2,6 +2,11 @@ import stdlib;
 import tebas;
 import tebasplugin;
 
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
 print(getName() + " plugin help");
 print("");
 print("Scripts:");
@@ -17,8 +22,8 @@ print("  list-remotes               See a list of remotes (git remote -v)");
 print("  push [remote]              Push current branch to remote. If there is only 1 remote, it can be omitted (git push <remote> <branch> --follow-tags)");
 print("  pull [remote]              Pulls current branch from remote. If there is only 1 remote, it can be omitted (git pull <remote> <branch> --rebase)");
 print("Globals:");
+print("  edit-gitignore          Edit the default .gitignore file");
 print("  config <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
-print("  config-gitignore        Edit the default .gitignore file");
 print("  help                    This help menu");
 print("");
 print("This plugin will help you manage git repositories, remotes, and more");

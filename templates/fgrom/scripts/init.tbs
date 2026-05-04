@@ -1,0 +1,9 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+tab files = tebasproject::folderListChildFiles("", "*.fgrom");
+if files.length <= 0 & !tebasproject::fileExists("shader.fgrom"){
+	tebasproject::fileWrite("shader.fgrom", tebastemplate::getResource("program"));
+}

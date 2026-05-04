@@ -14,6 +14,8 @@ createFile("description.txt", "");
 createFile("properties.tbs", tebastemplate::getResource("properties"));
 createFile("globals/help.tbs", tebastemplate::getResource("help"));
 
+tebasproject::setResource("timesBuilt", "0");
+
 function createFile(path, content){
 	if(!tebasproject::fileExists(path)){
 		tebasproject::fileWrite(path, content);

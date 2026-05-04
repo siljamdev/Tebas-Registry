@@ -1,0 +1,22 @@
+import stdlib;
+import paths;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+if args.length == 1{
+	tebasproject::runProcess(tebastemplate::getResource("fragroomPath"), getDirectory(args.0), args.0);
+}else{
+	if tebasproject::fileExists("shader.fgrom"){
+		tab path = tebasproject::getPath() + "/shader.fgrom";
+		tebasproject::runProcess(tebastemplate::getResource("fragroomPath"), getDirectory(path), path^);
+	}else{
+		tab files = tebasproject::folderListChildFiles("", "*.fgrom");
+		if files > 0{
+			tab path = tebasproject::getPath() + "/" + files.0;
+			tebasproject::runProcess(tebastemplate::getResource("fragroomPath"), getDirectory(path), path^);
+		}else{
+			error("No fgrom files found for running");
+		}
+	}
+}

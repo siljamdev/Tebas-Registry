@@ -1,0 +1,148 @@
+import stdlib;
+import stdnum;
+import stdlist;
+import tebas;
+import tebasproject;
+import tebastemplate;
+import "scripts.build";
+import "utils.csproj";
+import "utils.output";
+
+tab whitespace = [" ", "	", "\n"];
+
+tab built = 0;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+//1.
+tab ver = getVersion();
+
+//2.
+if tebasproject::folderExists("releases/" + ver){
+	tab ans = input("The version " + ver + " already exists. Do you want to override it? [Y/N] ").lower();
+	if ans != "yes" & ans != "y"{
+		exit;
+	}
+	tebasproject::folderDelete("releases/" + ver);
+}
+tebasproject::folderCreate("releases/" + ver);
+
+//3.
+if !tebasproject::fileExists("releases/publish.args"){
+	error("Missing releases/publish.args file");
+	exit;
+}
+tab lines = tebasproject::fileReadLines("releases/publish.args");
+
+foreach line @ lines{
+	publishLine(line);
+}
+
+if !built{
+	exit; //No after actions if none was published
+}
+
+//4.
+if !tebasproject::fileExists("releases/publishFinish"){
+	exit;
+}
+
+lines = tebasproject::fileReadLines("releases/publishFinish");
+foreach line @ lines{
+	if line.trim()% <= 0 | line.trim()%.0 == "#"{
+		continue;
+	}
+	
+	tab spl = splitLine(line);
+	tebasproject::runProcess(spl.0, "releases/" + ver, spl[1, length]);
+}
+
+
+
+
+function publishLine(line){
+	//Empty line or comment
+	if line.trim()% <= 0 | line.trim()%.0 == "#"{
+		return;
+	}
+	
+	tab a = splitLine(line);
+	tab tar = a.0;
+	tab comm = a[1, length];
+	
+	tab out = "releases/" + ver + "/" + tar;
+	tab list = tebasproject::runProcessWithOutput(tebastemplate::getResource("dotnetPath"), "", ["publish", "/nologo", "/clp:NoSummary", "-c", "Release", "-r", tar, "--output", out^] + comm);
+	if list.length == 0{
+		error("An error occured publishing line: " + line);
+		return;
+	}
+	
+	tab exitCode = list.getTab(2);
+	
+	showOutput(list.getTab(0) + list.getTab(1));
+	
+	tebasproject::setResource("timesBuilt", stdnum::sum(tebasproject::getResource("timesBuilt"), "1"));
+	
+	if exitCode != "0"{
+		error("An error occured publishing line: " + line);
+	}else{
+		built = 1;
+	}
+}
+
+function splitLine(line){
+	tab inArg = 0;
+	tab inQuote = 0;
+	tab previousEscapeCode = 0;
+	
+	tab parts = [];
+	tab current = [];
+	
+	foreach c @ line%{
+		if !inQuote & c @ whitespace{
+			if inArg{
+				inArg = 0;
+				if previousEscapeCode{
+					current += "\\";
+					previousEscapeCode = 0;
+				}
+				parts += current^;
+				current = [];
+			}
+		}else{
+			if !previousEscapeCode{
+				if c == "\\"{
+					previousEscapeCode = 1;
+				}else if c == "\""{
+					inQuote = !inQuote;
+				}else{
+					current += c;
+				}
+			}else{
+				previousEscapeCode = 0;
+				if !(c == "\\" | c == "\""){
+					current += "\\";
+				}
+				current += c;
+			}
+			inArg = 1;
+		}
+	}
+	
+	if inArg{
+		if previousEscapeCode{
+			current += "\\";
+		}
+		parts += current^;
+	}
+	
+	return parts;
+}
+
+export function getVersion(){
+	tab list = tebasproject::runProcessWithOutput(tebastemplate::getResource("dotnetPath"), "", ["msbuild", "-nologo", "-getProperty:Version"]);
+	return list.getTab(0);
+}

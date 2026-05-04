@@ -1,0 +1,17 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " template help");
+print("");
+print("Scripts:");
+print("  NAME    DESCRIPTION");
+print("Globals:");
+print("  help    This help menu");
+print("");
+print("INFO");

@@ -1,0 +1,14 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 1{
+	error("Expected 1 argument: 'file'");
+	exit;
+}
+
+if tebastemplate::getResource("runDetached") == "true"{
+	tebastemplate::runProcessDetached(tebastemplate::getResource("pythonPath"), "", args.0);
+}else{
+	tebastemplate::runProcess(tebastemplate::getResource("pythonPath"), "", args.0);
+}

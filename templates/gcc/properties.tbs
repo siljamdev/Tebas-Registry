@@ -19,6 +19,10 @@ export function getProperty(key){
 		return total;
 	}
 	
+	if key == "stats.timesBuilt"{
+		return tebasproject::getResource("timesBuilt");
+	}
+	
 	if(key == "git.defaultGitignore"){
 		return tebastemplate::getResource("gitignore").splitLines();
 	}

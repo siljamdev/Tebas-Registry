@@ -1,0 +1,40 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+tebasproject::folderCreate("src");
+tebasproject::folderCreate("releases");
+
+tab pfiles = tebasproject::folderListFiles("", "*.csproj");
+if pfiles.length <= 0 & !tebasproject::fileExists(tebasproject::getName() + ".csproj"){
+	tab base = tebastemplate::fileReadLines("default.csproj");
+	base = base.replace(["$author$", "$company$", "$name$"], [tebastemplate::getResource("author"), tebastemplate::getResource("company"), tebasproject::getName()]);
+	
+	tebasproject::fileWriteLines(tebasproject::getName() + ".csproj", base);
+}
+
+tab files = tebasproject::folderListChildFiles("src", "*.cs");
+if files.length <= 0 & !tebasproject::fileExists("src/" + tebasproject::getName() + ".cs"){
+	tab content = tebastemplate::getResource("program");
+	content = content.replace(["$name$"], [tebasproject::getName()]);
+	
+	tebasproject::fileWrite("src/" + tebasproject::getName() + ".cs", content);
+}
+
+tebasproject::setResource("timesBuilt", "0");
+
+if !tebasproject::fileExists("releases/publish.args"){
+	tab tar = "";
+	tab os = getOS();
+	
+	if os == "windows"{
+		tar = "win-x64";
+	}else if os == "linux"{
+		tar = "linux-x64";
+	}else if os == "linux"{
+		tar = "osx-x64";
+	}
+	
+	tebasproject::fileWrite("releases/publish.args", tar);
+}

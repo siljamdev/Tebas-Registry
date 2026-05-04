@@ -2,34 +2,14 @@ import stdlib;
 import tebas;
 import tebasplugin;
 
-tab pr = tebasplugin::getResource("browserPath");
-if pr > 0{
-	print("Browser executable path gotten from previous plugin resources");
-	testProcess(pr);
-	exit;
+if !tebasplugin::fileExists("runnables.conf"){
+	tebasplugin::fileWrite("runnables.conf", tebasplugin::getResource("runnables"));
 }
 
-tab sr = getShared("paths.browser");
-if sr > 0{
-	tebasplugin::setResource("browserPath", sr);
-	print("Browser executable path gotten from shared resources");
-	testProcess(sr);
-	exit;
+if !tebasplugin::fileExists("debuggables.conf"){
+	tebasplugin::fileWrite("debuggables.conf", tebasplugin::getResource("debuggables"));
 }
 
-tab m = input("Enter a browser executable path: ").removeQuotes();
-tebasplugin::setResource("browserPath", m);
-if testProcess(m){
-	setShared("paths.browser", m);
-}
-
-function testProcess(path){
-	tab num = tebasplugin::runProcessSilent(path, "", ["-h"]);
-	
-	if num.length == 0{
-		error("'" + path + "' does not seem to be a runnable process");
-		return 0;
-	}
-	
-	return 1;
+if !tebasplugin::fileExists("buildables.conf"){
+	tebasplugin::fileWrite("buildables.conf", tebasplugin::getResource("buildables"));
 }

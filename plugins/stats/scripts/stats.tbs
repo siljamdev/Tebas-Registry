@@ -9,11 +9,20 @@ if args.length != 0{
 }
 
 tab lines = getProperty("stats.codeLines");
+tab built = getProperty("stats.timesBuilt");
 
-if(lines.isNum()){
+if lines.isNum(){
 	print("Lines of code in local project: " + lines);
+	if built.isNum(){
+		print("Local project built " + built + " times");
+	}
+	
 	tebasproject::runScript("stats", [lines]);
 }else{
 	print("Looks like there is no lines of code in this project...");
+	if built.isNum(){
+		print("Local project built " + built + " times");
+	}
+	
 	tebasproject::runScript("stats", ["0"]);
 }

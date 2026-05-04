@@ -1,0 +1,27 @@
+name: Restrict changes
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-paths:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Check
+        uses: dorny/paths-filter@v4
+        id: check
+        with:
+          predicate-quantifier: every
+          filters: |
+            allowed:
+              - 'plugins/**'
+              - 'templates/**'
+        
+      - name: Block
+        if: steps.check.outputs.allowed == 'false'
+        run: |
+          echo "PR contains changes outside plugins/ and templates/"
+          exit 1

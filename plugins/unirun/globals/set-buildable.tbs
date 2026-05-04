@@ -1,0 +1,11 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+import "utils.runnableHandle";
+
+if args.length != 2{
+	error("Expected 2 arguments: 'extension', 'command'");
+	exit;
+}
+
+set(args.0, args.1, "buildables.conf");

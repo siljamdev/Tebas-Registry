@@ -1,12 +1,17 @@
 # Tebas Registry
-Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)
+Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)  
+
+Built for Tebas v1.0.0-beta-5
 
 ## Contributing
-Before making a PR, execute `build.sh` with the latest tebas version installed and make sure all templates and plugins succesfully build
+Before making a PR, run `build.sh` with the latest tebas version installed and make sure all templates and plugins succesfully build  
+Try to keep in mind the [design guidelines](https://github.com/siljamdev/Tebas/blob/main/documentation/designGuidelines.md)   
 
 ---
 
 ## Available Templates
+- [dotnet](./templates/dotnet): Template that helps you create c# projects with dotnet
+- [fgrom](./templates/fgrom): Template that helps you create fragroom shaders
 - [gcc](./templates/gcc): Template that helps you create c projects with gcc
 - [html](./templates/html): Template that helps you create web projects with html files
 - [python](./templates/python): Template that helps you create python projects

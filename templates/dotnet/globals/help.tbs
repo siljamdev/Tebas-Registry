@@ -1,0 +1,32 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+print(getName() + " template help");
+print("");
+print("Scripts:");
+print("  run                                Runs the project if build succeeds");
+print("  debug                              Runs the project and waits for user input if build succeeds");
+print("  build                              Builds the project");
+print("  publish                            Builds the project into the releases folder as specified by publish.args");
+print("  add-package <package> [version]    Add a nuget package to the project");
+print("Globals:");
+print("  edit-csproj              Edit the default csproj file. You can use $name$, $author$ and $company$");
+print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                     This help menu");
+print("");
+print("This template is used with dotnet to build c# projects");
+print("The source code .cs files are expected to go in src/");
+print("It will build into the releases folder when publishing, based on each line of the file releases/publish.args");
+print("publish.args structure (one entry per line):");
+print("  <target> [argments]");
+print("Target is any dotnet runtime identifier (win-x64, linux-x64...) and the arguments will be added to the end of the publish command: dotnet publish /nologo /clp:NoSummary -c Release -r <target> --output releases/<version>/<target> [arguments]");
+print("version is the version set in the .csproj file");
+print("After publishing, all lines of the file releases/publishFinish will be run as processes in the output version folder. This allows for after-publish actions, like compressing into a .zip");
+print("publishFinish structure (one entry per line):");
+print("  <process> [argments]");

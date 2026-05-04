@@ -2,28 +2,33 @@ import stdlib;
 import tebas;
 import tebastemplate;
 
-//Previous template resources
-tab pr = tebastemplate::getResource("browserPath");
-if pr > 0{
-	print("Browser executable path gotten from previous template resources");
-	testProcess(pr);
-	exit;
-}
+browserPath();
+unirun();
 
-//Shared resources
-tab sr = tebas::getShared("paths.browser");
-if sr > 0{
-	tebastemplate::setResource("browserPath", sr);
-	print("Browser executable path gotten from shared resources");
-	testProcess(sr);
-	exit;
-}
-
-//User input
-tab m = input("Enter browser executable path: ").removeQuotes();
-tebastemplate::setResource("browserPath", m);
-if testProcess(m){
-	tebas::setShared("paths.browser", m); //Only save if it was succesfully tested
+function browserPath(){
+	//Previous template resources
+	tab pr = tebastemplate::getResource("browserPath");
+	if pr > 0{
+		print("Browser executable path gotten from previous template resources");
+		testProcess(pr);
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths.browser");
+	if sr > 0{
+		tebastemplate::setResource("browserPath", sr);
+		print("Browser executable path gotten from shared resources");
+		testProcess(sr);
+		return;
+	}
+	
+	//User input
+	tab m = input("Enter browser executable path: ").removeQuotes();
+	tebastemplate::setResource("browserPath", m);
+	if testProcess(m){
+		tebas::setShared("paths.browser", m); //Only save if it was succesfully tested
+	}
 }
 
 function testProcess(path){
@@ -35,4 +40,10 @@ function testProcess(path){
 	}
 	
 	return 1;
+}
+
+function unirun(){
+	if tebas::pluginInstalled("unirun"){
+		tebas::pluginRunGlobal("unirun", "set-runnable", ["html", ("template " + tebastemplate::getName() + " run $")^]);
+	}
 }

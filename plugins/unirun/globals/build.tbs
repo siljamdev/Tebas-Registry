@@ -1,3 +1,13 @@
+import stdlib;
+import tebas;
 import tebasplugin;
+import "utils.runnables";
 
+if args.length != 1{
+	error("Expected 1 argument: 'file'");
+	exit;
+}
 
+if !tryExec(args.0, "buildables.conf"){
+	error("Impossible to build file");
+}

@@ -2,12 +2,19 @@
 
 readme="README.md"
 
-cat > "$readme" << 'EOF'
+version=$(curl --ssl-no-revoke -fL -H "User-Agent: TebasRegistry" \
+https://api.github.com/repos/siljamdev/Tebas/releases/latest \
+| grep '"tag_name"' | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')
+
+cat > "$readme" << EOF
 # Tebas Registry
-Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)
+Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)  
+Built for Tebas $version  
+Download files from the [Releases](https://github.com/siljamdev/Tebas-Registry/releases/latest)
 
 ## Contributing
-Before making a PR, execute `build.sh` with the latest tebas version installed and make sure all templates and plugins succesfully build
+Before making a PR, run \`build.sh\` with the latest tebas version installed and make sure all templates and plugins succesfully build  
+Try to keep in mind the [design guidelines](https://github.com/siljamdev/Tebas/blob/main/documentation/designGuidelines.md)   
 
 ---
 

@@ -1,0 +1,11 @@
+import stdlib;
+import paths;
+import tebas;
+import tebastemplate;
+
+if args.length != 1{
+	error("Expected 1 argument: 'file'");
+	exit;
+}
+
+tebastemplate::runProcess(tebastemplate::getResource("fragroomPath"), getDirectory(args.0), args.0);

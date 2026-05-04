@@ -1,4 +1,5 @@
 import stdlib;
+import stdnum;
 import tebas;
 import tebasproject;
 import tebastemplate;
@@ -23,3 +24,5 @@ if tebastemplate::getResource("usePdb") == "true"{
 		input("Press enter to continue...");
 	}
 }
+
+tebasproject::setResource("timesBuilt", stdnum::sum(tebasproject::getResource("timesBuilt"), "1"));

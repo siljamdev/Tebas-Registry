@@ -1,7 +1,13 @@
 import stdlib;
-import paths;
+import tebas;
 import tebasplugin;
+import "utils.runnables";
 
-if(getExtension(args.0).lower() == ".html"){
-	tebasplugin::runProcess(tebasplugin::getResource("browserPath"), "", args.0);
+if args.length != 1{
+	error("Expected 1 argument: 'file'");
+	exit;
+}
+
+if !tryExec(args.0, "runnables.conf"){
+	error("Impossible to run file");
 }

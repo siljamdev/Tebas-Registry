@@ -1,0 +1,63 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+export function set(extension, command, path){
+	extension = extension.trim().lower();
+	
+	tab lines = tebasplugin::fileReadLines(path);
+	if lines < 1{
+		lines += (extension + ": " + command)^;
+		tebasplugin::fileWriteLines(path, lines);
+		return;
+	}
+	
+	tab i = 0;
+	while i < lines{
+		tab line = lines[i];
+		if line.trim()% <= 0 | line.trim()%.0 == "#"{ //Empty lines or comments
+			i += 1;
+			continue;
+		}
+		tab a = line.split(":");
+		tab ext = a.0.trim();
+		
+		if ext == extension{
+			lines[i] = (extension + ": " + command)^;
+			tebasplugin::fileWriteLines(path, lines);
+			return;
+		}
+		
+		i += 1;
+	}
+	
+	lines += (extension + ": " + command)^;
+	tebasplugin::fileWriteLines(path, lines);
+}
+
+export function cleanup(path){
+	tab lines = tebasplugin::fileReadLines(path);
+	if lines < 1{
+		return;
+	}
+	
+	tab final = [];
+	tab exts = [];
+	
+	foreach line @ lines{
+		if line.trim()% <= 0 | line.trim()%.0 == "#"{ //EMpty lines or comments
+			final += line;
+			continue;
+		}
+		
+		tab a = line.split(":");
+		tab ext = a.0.trim().lower();
+		
+		if !(ext @ exts){
+			exts += ext;
+			final += (ext + ": " + a[1,length].join(":"))^;
+		}
+	}
+	
+	tebasplugin::fileWriteLines(path, final);
+}

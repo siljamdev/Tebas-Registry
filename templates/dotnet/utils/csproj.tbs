@@ -1,0 +1,10 @@
+import stdlib;
+import stdlist;
+import tebas;
+import tebastemplate;
+
+export function ensureDefaultCsprojExists(){
+	if !tebastemplate::fileExists("default.csproj"){
+		tebastemplate::fileWrite("default.csproj", tebastemplate::getResource("csproj")); //Ensure file exists
+	}
+}

@@ -3,6 +3,11 @@ import tebas;
 import tebasplugin;
 import "utils.gitignore";
 
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
 ensureDefaultGitignoreExists();
 
 tebasplugin::open(tebasplugin::getPath() + "/default.gitignore");

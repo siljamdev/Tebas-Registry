@@ -1,0 +1,10 @@
+import stdlib;
+import tebas;
+import tebasplugin;
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+tebasplugin::open(tebasplugin::getPath() + "/runnables.conf");

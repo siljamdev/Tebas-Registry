@@ -1,4 +1,7 @@
+import stdnum;
 import tebas;
 import tebasproject;
 
 pluginBuild("", "");
+
+tebasproject::setResource("timesBuilt", stdnum::sum(tebasproject::getResource("timesBuilt"), "1"));

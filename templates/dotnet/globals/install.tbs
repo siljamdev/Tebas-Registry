@@ -1,0 +1,88 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+import "utils.csproj";
+
+dotnet();
+author();
+company();
+csprojFile();
+
+function dotnet(){
+	//Previous template resources
+	tab pr = tebastemplate::getResource("dotnetPath");
+	if pr > 0{
+		print("Dotnet executable path gotten from previous template resources");
+		testProcess(pr);
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths.dotnet");
+	if sr > 0{
+		tebastemplate::setResource("dotnetPath", sr);
+		print("Dotnet executable path gotten from shared resources");
+		testProcess(sr);
+		return;
+	}
+	
+	//User input
+	tab m = input("Enter Dotnet executable path: ").removeQuotes();
+	tebastemplate::setResource("dotnetPath", m);
+	if testProcess(m){
+		tebas::setShared("paths.dotnet", m); //Only save if it was succesfully tested
+	}
+}
+
+function author(){
+	tab pr = tebastemplate::getResource("author");
+	if pr.trim()% > 0{
+		print("Author name gotten from previous template resources");
+		return;
+	}
+	
+	tab sr = getShared("author");
+	if sr.trim()% > 0{
+		tebastemplate::setResource("author", sr);
+		print("Author name gotten from shared resources");
+		return;
+	}
+	
+	tab m = input("Enter your author name: ").trim();
+	tebastemplate::setResource("author", m);
+	setShared("author", m);
+}
+
+function company(){
+	tab pr = tebastemplate::getResource("company");
+	if pr.trim()% > 0{
+		print("Company name gotten from previous template resources");
+		return;
+	}
+	
+	tab sr = getShared("company");
+	if sr.trim()% > 0{
+		tebastemplate::setResource("company", sr);
+		print("Company name gotten from shared resources");
+		return;
+	}
+	
+	tab m = input("Enter your company name: ").trim();
+	tebastemplate::setResource("company", m);
+	setShared("company", m);
+}
+
+function csprojFile(){
+	ensureDefaultCsprojExists();
+}
+
+function testProcess(path){
+	tab num = tebastemplate::runProcessSilent(path, "", ["-h"]);
+	
+	if num.length == 0{
+		error("'" + path + "' does not seem to be a runnable process");
+		return 0;
+	}
+	
+	return 1;
+}

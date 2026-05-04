@@ -1,6 +1,11 @@
 import tebasproject;
 import tebasplugin;
+import tebas;
 
-if !runScript("build", args.0){
-	tebasplugin::runGlobal("build", args.0);
+if !runScript("build", args.0) & args > 0{
+	if args > 0{
+		tebasplugin::runGlobal("build", args.0);
+	}else{
+		error("No template script available");
+	}
 }

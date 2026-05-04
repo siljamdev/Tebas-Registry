@@ -1,0 +1,13 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+import "utils.csproj";
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+ensureDefaultCsprojExists();
+
+tebastemplate::open(tebastemplate::getPath() + "/default.csproj");

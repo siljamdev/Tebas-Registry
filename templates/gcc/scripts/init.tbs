@@ -14,3 +14,5 @@ if files.length <= 0{
 		tebasproject::fileWrite("src/main.c", tebastemplate::getResource("program"));
 	}
 }
+
+tebasproject::setResource("timesBuilt", "0");

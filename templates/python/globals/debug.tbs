@@ -1,0 +1,29 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+if args.length != 1{
+	error("Expected 1 argument: 'file'");
+	exit;
+}
+
+if tebastemplate::getResource("usePdb") == "true"{
+	if tebastemplate::getResource("runDetached") == "true"{
+		tebastemplate::runProcessDetached(tebastemplate::getResource("pythonPath"), "", ["-m", "pdb", args.0]);
+	}else{
+		tebastemplate::runProcess(tebastemplate::getResource("pythonPath"), "", ["-m", "pdb", args.0]);
+	}
+}else{
+	if tebastemplate::getResource("runDetached") == "true"{
+		tab isWin = getOS() == "windows";
+		if isWin{
+			tebastemplate::runProcessDetached("cmd", "", ["/c", tebastemplate::getResource("pythonPath"), args.0, "&", "echo.", "&", "pause"]);
+		}else{
+			tab command = "\"" + tebastemplate::getResource("pythonPath") + "\" \"" + args.0 + "\"; echo; read -p 'Press enter to continue...'";
+			tebastemplate::runProcessDetached("sh", "bin/", ["-c", command^]);
+		}
+	}else{
+		tebastemplate::runProcess(tebastemplate::getResource("pythonPath"), "", [args.0]);
+		input("Press enter to continue...");
+	}
+}
