@@ -3,8 +3,16 @@ import stdnum;
 import paths;
 import tebas;
 
-if args.length != 0{
-	error("Expected 0 arguments");
+tab allowedTemplates = [];
+tab forbiddenTemplates = [];
+
+tab allowedFolders = [];
+tab forbiddenFolders = [];
+
+if args.length == 1{
+	parseFilter(args.0);
+}else if args.length != 0{
+	error("Expected 0 or 1 arguments: 'filter'");
 	exit;
 }
 
@@ -17,7 +25,9 @@ tab unsorted;
 tab totalLines = "0";
 
 foreach proj @ projects{
-	if !tebas::projectExists(proj){
+	proj = proj.replace("/", paths::getSeparator());
+	
+	if !includeProject(proj){
 		continue;
 	}
 	
@@ -43,6 +53,76 @@ while i < sorted{
 }
 print("");
 print("Total lines of code: " + totalLines);
+
+function includeProject(proj){
+	if !tebas::projectExists(proj){
+		return 0;
+	}
+	
+	foreach folder @ forbiddenFolders{
+		if proj == folder | proj.startsWith(folder + paths::getSeparator()){
+			return 0;
+		}
+	}
+	
+	if allowedFolders.length != 0{
+		foreach folder @ allowedFolders{
+			if proj == folder | proj.startsWith(folder + paths::getSeparator()){
+				break;
+			}
+		}else{
+			return 0;
+		}
+	}
+	
+	tab t = tebas::getProjectTemplateName(proj);
+	if t @ forbiddenTemplates | (allowedTemplates.length != 0 & !(t @ allowedTemplates)){
+		return 0;
+	}
+	
+	return 1;
+}
+
+function parseFilter(filter){
+	filter = filter.trim();
+	tab parts = filter.split(";");
+	
+	foreach part @ parts{
+		part = part.trim();
+		if part%[0, 2]^.lower() == "t:"{
+			part = part%[2, length]^;
+			tab entries = part.split(",");
+			foreach entry @ entries{
+				entry = entry.trim();
+				if entry%.0 == "!"{
+					allowedTemplates -= entry%[1, length]^;
+					forbiddenTemplates += entry%[1, length]^;
+				}else{
+					if !(entry @ forbiddenTemplates){
+						allowedTemplates += entry;
+					}
+				}
+			}
+		}else if part%[0, 2]^.lower() == "d:"{
+			part = part%[2, length]^;
+			tab entries = part.split(",");
+			foreach entry @ entries{
+				entry = entry.trim().replace("/", paths::getSeparator());
+				if entry%.0 == "!"{
+					allowedFolders -= entry%[1, length]^;
+					forbiddenFolders += entry%[1, length]^;
+				}else{
+					if !(entry @ forbiddenFolders){
+						allowedFolders += entry;
+					}
+				}
+			}
+		}else{
+			error("Unknown filter option: " + part);
+			exit;
+		}
+	}
+}
 
 function sortByValue(result){
 	tab n = result.length;
@@ -75,4 +155,9 @@ function sortByValue(result){
 	}
 	
 	return result;
+}
+
+function startsWith(self, header){
+	header = header%;
+	return self%[0, header.length] == header;
 }
