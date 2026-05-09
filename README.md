@@ -1,6 +1,6 @@
 # Tebas Registry
 Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)  
-Built for Tebas v1.0.0  
+Built for Tebas v1.0.1  
 Download files from the [Releases](https://github.com/siljamdev/Tebas-Registry/releases/latest)
 
 ## Contributing
