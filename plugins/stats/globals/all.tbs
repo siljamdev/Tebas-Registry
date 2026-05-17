@@ -2,6 +2,7 @@ import stdlib;
 import stdnum;
 import paths;
 import tebas;
+import tebasplugin;
 
 tab allowedTemplates = [];
 tab forbiddenTemplates = [];
@@ -33,10 +34,10 @@ foreach proj @ projects{
 	
 	tab lines = getProjectProperty(proj, "stats.codeLines");
 	if(lines.isNum()){
-		unsorted += [getFilename(proj), lines];
+		unsorted += [proj, lines];
 		totalLines = sum(totalLines, lines);
 	}else{
-		unsorted += [getFilename(proj), "0"];
+		unsorted += [proj, "0"];
 	}
 }
 
@@ -45,8 +46,10 @@ tab sorted = sortByValue(unsorted);
 print("Lines of code by project:");
 tab c = "1";
 tab i = 0;
+tab onlyNames = tebasplugin::getResource("onlyProjectNames") == "true";
+
 while i < sorted{
-	print("  " + c + ". " + sorted[i] + ": " + sorted[i + 1]);
+	print("  " + c + ". " + (onlyNames ? getFilename(sorted[i]) : sorted[i]) + ": " + sorted[i + 1]);
 	
 	c = sum(c, "1");
 	i += 2;

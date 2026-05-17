@@ -23,6 +23,7 @@ print("  set-buildable <extension> <command>     Set the entry for a buildable f
 print("  edit-runnables                          Edit the runnable files list");
 print("  edit-debuggables                        Edit the debuggable files list");
 print("  edit-buildables                         Edit the buildable files list");
+print("  config <key> <value>                    Change the config. Use list as key to get all valid keys, and see to see the current config");
 print("  help                                    This help menu");
 print("");
 print("This plugin can run anything from a single unified command");

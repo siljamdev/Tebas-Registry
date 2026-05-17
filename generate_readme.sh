@@ -10,7 +10,8 @@ cat > "$readme" << EOF
 # Tebas Registry
 Official template & plugin registry for [Tebas](https://github.com/siljamdev/Tebas)  
 Built for Tebas $version  
-Download files from the [Releases](https://github.com/siljamdev/Tebas-Registry/releases/latest)
+Use the link \`https://github.com/siljamdev/Tebas-Registry\` for Tebas option \`registry.url\`  
+Download files manually from the [Releases](https://github.com/siljamdev/Tebas-Registry/releases/latest)
 
 ## Contributing
 Before making a PR, run \`build.sh\` with the latest tebas version installed and make sure all templates and plugins succesfully build  

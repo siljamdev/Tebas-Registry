@@ -9,6 +9,8 @@ if args.length != 1{
 	exit;
 }
 
+tebasproject::folderCreate("releases");
+
 if tebasproject::folderExists("releases/" + args.0){
 	tab ans = input("That version already exists. Do you want to override it? [Y/N] ").lower();
 	if ans != "yes" & ans != "y"{

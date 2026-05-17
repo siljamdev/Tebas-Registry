@@ -1,11 +1,20 @@
 import tebasproject;
 import tebasplugin;
 import tebas;
+import "utils.runnables";
 
-if !runScript("run", args.0){
-	if args > 0{
-		tebasplugin::runGlobal("run", args.0);
-	}else{
-		error("No template script available");
+if args > 0 & tebasplugin::getResource("runnablesPriority") == "true"{
+	if !tryExecSilent(args.0, "runnables.conf"){
+		if !runScript("run", args.0){
+			error("No template script available");
+		}
+	}
+}else{
+	if !runScript("run", args.0){
+		if args > 0{
+			tebasplugin::runGlobal("run", args.0);
+		}else{
+			error("No template script available");
+		}
 	}
 }

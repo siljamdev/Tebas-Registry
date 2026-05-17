@@ -6,7 +6,7 @@ import tebastemplate;
 tebasproject::folderCreate("src");
 tebasproject::folderCreate("include");
 tebasproject::folderCreate("bin");
-tebasproject::folderCreate("releases");
+//tebasproject::folderCreate("releases");
 
 tab files = tebasproject::folderListChildFiles("src", "*.c");
 if files.length <= 0{

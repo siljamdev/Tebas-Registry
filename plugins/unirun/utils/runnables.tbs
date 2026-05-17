@@ -8,7 +8,7 @@ tab whitespace = [" ", "	", "\n"];
 export function tryExec(file, path){
 	tab lines = tebasplugin::fileReadLines(path);
 	if lines < 1{
-		error("Empty runnables file");
+		error("Empty runnables file: '" + path + "'");
 		return 0;
 	}
 	
@@ -26,6 +26,28 @@ export function tryExec(file, path){
 	}
 	
 	error("Extension not present: '" + extension + "'");
+	return 0;
+}
+
+export function tryExecSilent(file, path){
+	tab lines = tebasplugin::fileReadLines(path);
+	if lines < 1{
+		return 0;
+	}
+	
+	tab extension = getExtension(file)%[1,length]^.lower();
+	
+	foreach line @ lines{
+		if line.trim()% <= 0 | line.trim()%.0 == "#"{ //Empty lines or Comments
+			continue;
+		}
+		tab a = line.split(":");
+		tab ext = a.0.trim();
+		if extension == ext{
+			return execute(a[1,length].join(":"), file);
+		}
+	}
+	
 	return 0;
 }
 
