@@ -9,6 +9,7 @@ Thumbs.db
 #Logs
 *.log
 
+#MANUAL
 *.ps1
 *.tebas
 built/

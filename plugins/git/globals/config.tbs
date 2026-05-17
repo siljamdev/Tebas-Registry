@@ -2,9 +2,9 @@ import stdlib;
 import tebas;
 import tebasplugin;
 
-tab validKeys = ["gitPath", "defaultBranch", "addOnCommit"]; //List of valid co figurable keys
-tab trueFalseKeys = ["addOnCommit"]; //Add here keys that can only take true/false values
-tab keysDescription = ["Git executable path", "Default branch that will be used on repo init, unless templates specify one", "If the add script will run when commit is run, before commiting"]; //In the same order as validKeys
+tab validKeys = ["gitPath", "defaultBranch", "addOnCommit", "pushToAll"]; //List of valid co figurable keys
+tab trueFalseKeys = ["addOnCommit", "pushToAll"]; //Add here keys that can only take true/false values
+tab keysDescription = ["Git executable path", "Default branch that will be used on repo init, unless templates specify one", "If the add script will run when commit is run, before commiting", "If the push script will push to all remotes when having no argument"]; //In the same order as validKeys
 
 if args.length == 1{
 	if args.0 == "list"{

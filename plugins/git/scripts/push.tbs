@@ -10,11 +10,18 @@ exitIfNotInit();
 
 if args.length == 0{
 	tab remotes = getAllRemotes();
-	if remotes.length == 1{
-		push(remotes.0);
+	if tebasplugin::getResource("pushToAll") == "true"{
+		foreach remote @ remotes{
+			push(remote);
+		}
 	}else{
-		error("More than one remote. Please specify the argument: 'remote'");
+		if remotes.length == 1{
+			push(remotes.0);
+		}else{
+			error("More than one remote. Please specify the argument: 'remote'");
+		}
 	}
+	
 }else if args.length == 1{
 	push(args.0);
 }else{
