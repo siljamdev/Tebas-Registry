@@ -1,9 +1,10 @@
 import stdlib;
+import paths;
 import tebas;
 import tebastemplate;
 import tebasproject;
 
-if args.length == 1{
+if args.length == 1 & paths::getExtension(args.0).lower() == ".html"{
 	tebasproject::runProcess(tebastemplate::getResource("browserPath"), "", args.0);
 }else{
 	if tebasproject::fileExists("index.html"){
