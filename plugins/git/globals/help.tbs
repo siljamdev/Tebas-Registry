@@ -27,6 +27,8 @@ print("  config <key> <value>    Change the config. Use list as key to get all v
 print("  help                    This help menu");
 print("");
 print("This plugin will help you manage git repositories, remotes, and more");
+print("");
+print("Compatibility:");
 print("To make your template compatible with this plugin, implement as needed the following properties:");
 print("  git.defaultGitignore: Should return a table where each element is a line to add to the .gitignore file on init");
 print("  git.addTarget: Should return a single length table with the target to the git add command (git add <target>). Its almost always not necessary to be implemented (default value is -A)");

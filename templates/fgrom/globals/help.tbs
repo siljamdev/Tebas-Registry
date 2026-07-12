@@ -10,8 +10,13 @@ if args.length != 0{
 print(getName() + " template help");
 print("");
 print("Scripts:");
-print("  NAME    DESCRIPTION");
+print("  run [file]    Runs the fragroom shader");
+print("  web <file>    Transform fragroom shader into a .html file");
 print("Globals:");
-print("  help    This help menu");
+print("  run <file>               Runs a fragroom shader");
+print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  help                     This help menu");
 print("");
-print("INFO");
+print("This template helps you with fragroom shaders development (.fgrom files)");
+print("");
+print("If unirun is installed, adds support for runnable .fgrom files");

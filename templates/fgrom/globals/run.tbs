@@ -8,4 +8,4 @@ if args.length != 1{
 	exit;
 }
 
-tebastemplate::runProcess(tebastemplate::getResource("fragroomPath"), getDirectory(args.0), args.0);
+tebastemplate::runProcess(tebastemplate::getResource("fragroomPath"), paths::getDirectory(args.0), args.0);

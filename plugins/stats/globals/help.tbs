@@ -21,8 +21,11 @@ print("  template: t:<template>,[template];       Specify templates, prefix a te
 print("  directory: d:<directory>,[directory];    Specify directories where projects must be, prefix a directory with ! to exclude it");
 print("For example: t:*,!tbtem; d:/projects,!/projects/work    will show stats for all projects with a template other than tbtem inside the projects directory, but not the work subdirectory");
 print("");
+print("This plugin lets you see and compare statistics of projects");
+print("");
+print("Compatibility:");
 print("To make your template compatible with this plugin, implement the following properties:");
 print("  stats.codeLines: Should return a stdnum num with the number of code lines in the project");
-print("  stats.timeBuilt: Should return a stdnum num with the number of times the project was built");
+print("  stats.timesBuilt: Should return a stdnum num with the number of times the project was built");
 print("Additionally, you can implement the following scripts:");
 print("  stats <num of lines>    Will be run when you run the stats script of this plugin. Takes as arg line num as a stdnum num");

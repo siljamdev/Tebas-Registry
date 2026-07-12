@@ -16,5 +16,6 @@ print("  run <file>               Runs a web page in the browser");
 print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
 print("  help                     This help menu");
 print("");
-print("This template helps you with local web page development (html files)");
-print("If using unirun, adds support for runnable .html files");
+print("This template helps you with local web page development (.html files)");
+print("");
+print("If unirun is installed, adds support for runnable .html files");

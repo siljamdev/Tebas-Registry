@@ -20,4 +20,5 @@ print("  help                     This help menu");
 print("");
 print("This template is used with the python executable to create python projects");
 print("All source code .py files are supposed to go in a folder called the same way as the module");
-print("If using unirun, adds support for runnable/debuggable .py files");
+print("");
+print("If unirun is installed, adds support for runnable/debuggable .py files");

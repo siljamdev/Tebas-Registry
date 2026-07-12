@@ -13,3 +13,4 @@ Thumbs.db
 *.ps1
 *.tebas
 built/
+*.url

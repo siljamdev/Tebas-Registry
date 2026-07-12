@@ -28,6 +28,7 @@ print("  help                                    This help menu");
 print("");
 print("This plugin can run anything from a single unified command");
 print("");
+print("Compatibility:");
 print("To make your template compatilbe with it, add the following scripts:");
 print("  run [file]");
 print("  debug [file]");
@@ -42,6 +43,6 @@ print("  template: runs a template global. Requires at least 2 parts: template n
 print("  plugin: runs a plugin global. Requires at least 2 parts: plugin name and global");
 print("  process: runs a process. Requires at least 1 part: process");
 print("  detached: runs a process detached (shell execute). Requires at least 1 part: process");
-print("  open: opens a url/file/folder/process (shell execute). Requires 1 part: target");
+print("  open: opens a url,file,folder or process (shell execute). Requires 1 part: target");
 print("");
-print("If your template or plugin supports a runnable/debuggable/buildable file, add it using set-runnable global or other options");
+print("If your template or plugin supports a runnable/debuggable/buildable file, add it using set-runnable global (or similar) on install");

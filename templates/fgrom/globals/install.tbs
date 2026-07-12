@@ -1,0 +1,49 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+fragroomPath();
+unirun();
+
+function fragroomPath(){
+	//Previous template resources
+	tab pr = tebastemplate::getResource("fragroomPath");
+	if pr > 0{
+		print("FragRoom executable path gotten from previous template resources");
+		testProcess(pr);
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths.fragroom");
+	if sr > 0{
+		tebastemplate::setResource("fragroomPath", sr);
+		print("FragRoom executable path gotten from shared resources");
+		testProcess(sr);
+		return;
+	}
+	
+	//User input
+	tab m = input("Enter FragRoom executable path: ").removeQuotes();
+	tebastemplate::setResource("fragroomPath", m);
+	if testProcess(m){
+		tebas::setShared("paths.fragroom", m); //Only save if it was succesfully tested
+	}
+}
+
+function testProcess(path){
+	tab num = tebastemplate::runProcessSilent(path, "", ["-h"]);
+	
+	if num.length == 0{
+		error("'" + path + "' does not seem to be a runnable process");
+		return 0;
+	}
+	
+	return 1;
+}
+
+function unirun(){
+	if tebas::pluginInstalled("unirun"){
+		tebas::pluginRunGlobal("unirun", "set-runnable", ["fgrom", ("template " + tebastemplate::getName() + " run $")^]);
+	}
+}
