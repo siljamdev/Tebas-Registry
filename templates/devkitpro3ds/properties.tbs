@@ -1,0 +1,34 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebastemplate;
+
+getProperty(""); //Make sure the compiler does not remove the function
+
+export function getProperty(key){
+	if key == "stats.codeLines"{
+		tab total = "0";
+		
+		tab files = tebasproject::folderListChildFiles("source", "*.c");
+		files += tebasproject::folderListChildFiles("source", "*.cpp");
+		files += tebasproject::folderListChildFiles("source", "*.s"); //Assembly sources
+		files += tebasproject::folderListChildFiles("shaders", "*.v.pica"); //Vertex shaders
+		files += tebasproject::folderListChildFiles("shaders", "*.g.pica"); //Geometry shaders
+		files += tebasproject::folderListChildFiles("shaders", "*.shlist"); //Shaders
+		files += tebasproject::folderListChildFiles("include", "*.h");
+		
+		foreach file @ files{
+			total = sum(total, max("0", tebasproject::fileReadLines(file).length.toNum()));
+		}
+		return total;
+	}
+	
+	if key == "stats.timesBuilt"{
+		return tebasproject::getResource("timesBuilt");
+	}
+	
+	if(key == "git.defaultGitignore"){
+		return tebastemplate::getResource("gitignore").splitLines();
+	}
+}

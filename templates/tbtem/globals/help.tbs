@@ -16,7 +16,7 @@ print("  install        Installs the template if it has been built");
 print("  add-tconfig    Adds a default tconfig global script, ready to be filled with the needed values to operate");
 print("  add-kr         Adds en empty KEEPRESOURCES file");
 print("Globals:");
-print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  tconfig <key> <value>    Change the config. Use 'list' as key to get all valid keys, and 'see' to see the current config");
 print("  help                     This help menu");
 print("");
 print("This template helps you creating Tebas templates");

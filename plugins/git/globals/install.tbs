@@ -3,33 +3,44 @@ import tebas;
 import tebasplugin;
 import "utils.gitignore";
 
-gitPath();
+genericExecutable("Git", "git", "gitPath", "git", "git");
 gitignoreFile();
 
 function gitignoreFile(){
 	ensureDefaultGitignoreExists();
 }
 
-function gitPath(){
-	tab pr = tebasplugin::getResource("gitPath");
+function genericExecutable(capitalizedName, name, resourceName, sharedName, testFirst){
+	//Previous template resources
+	tab pr = tebasplugin::getResource(resourceName);
 	if pr > 0{
-		print("Git executable path gotten from previous plugin resources");
+		print(capitalizedName + " executable path gotten from previous plugin resources: '" + pr + "'");
 		testProcess(pr);
 		return;
 	}
 	
-	tab sr = getShared("paths.git");
+	//Test before other things
+	if testFirst^ != "" & testProcess(testFirst){
+		tebasplugin::setResource(resourceName, testFirst);
+		tebas::setShared("paths." + sharedName, testFirst);
+		print(capitalizedName + " executable path gotten from the default: '" + testFirst + "'");
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths." + sharedName);
 	if sr > 0{
-		tebasplugin::setResource("gitPath", sr);
-		print("Git executable path gotten from shared resources");
+		tebasplugin::setResource(resourceName, sr);
+		print(capitalizedName + " executable path gotten from shared resources: '" + sr + "'");
 		testProcess(sr);
 		return;
 	}
 	
-	tab m = input("Enter git executable path: ").removeQuotes();
-	tebasplugin::setResource("gitPath", m);
+	//User input
+	tab m = input("Enter " + name + " executable path: ").removeQuotes();
+	tebasplugin::setResource(resourceName, m);
 	if testProcess(m){
-		setShared("paths.git", m);
+		tebas::setShared("paths." + sharedName, m); //Only save if it was succesfully tested
 	}
 }
 

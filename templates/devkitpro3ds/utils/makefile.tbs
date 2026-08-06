@@ -1,0 +1,21 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+export function getMakefile(){
+	ensureDefaultMakefileExists();
+	
+	return tebastemplate::fileRead("default_Makefile");
+}
+
+export function ensureDefaultMakefileExists(){
+	if !tebastemplate::fileExists("default_Makefile"){
+		tebastemplate::fileWrite("default_Makefile", tebastemplate::getResource("makefile")); //Ensure file exists
+	}
+}
+
+export function getInitialMakefile(){
+	ensureDefaultMakefileExists();
+	
+	return tebastemplate::fileRead("default_Makefile");
+}

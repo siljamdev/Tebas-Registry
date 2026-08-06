@@ -2,58 +2,40 @@ import stdlib;
 import tebas;
 import tebastemplate;
 
-gcc();
-gdb();
+genericExecutable("Gcc", "gcc", "gccPath", "gcc", "gcc");
+genericExecutable("Gdb", "gdb", "gdbPath", "gdb", "gdb");
 
-function gcc(){
+function genericExecutable(capitalizedName, name, resourceName, sharedName, testFirst){
 	//Previous template resources
-	tab pr = tebastemplate::getResource("gccPath");
+	tab pr = tebastemplate::getResource(resourceName);
 	if pr > 0{
-		print("GCC executable path gotten from previous template resources");
+		print(capitalizedName + " executable path gotten from previous template resources: '" + pr + "'");
 		testProcess(pr);
 		return;
 	}
 	
+	//Test before other things
+	if testFirst^ != "" & testProcess(testFirst){
+		tebastemplate::setResource(resourceName, testFirst);
+		tebas::setShared("paths." + sharedName, testFirst);
+		print(capitalizedName + " executable path gotten from the default: '" + testFirst + "'");
+		return;
+	}
+	
 	//Shared resources
-	tab sr = tebas::getShared("paths.gcc");
+	tab sr = tebas::getShared("paths." + sharedName);
 	if sr > 0{
-		tebastemplate::setResource("gccPath", sr);
-		print("GCC executable path gotten from shared resources");
+		tebastemplate::setResource(resourceName, sr);
+		print(capitalizedName + " executable path gotten from shared resources: '" + sr + "'");
 		testProcess(sr);
 		return;
 	}
 	
 	//User input
-	tab m = input("Enter GCC executable path: ").removeQuotes();
-	tebastemplate::setResource("gccPath", m);
+	tab m = input("Enter " + name + " executable path: ").removeQuotes();
+	tebastemplate::setResource(resourceName, m);
 	if testProcess(m){
-		tebas::setShared("paths.gcc", m); //Only save if it was succesfully tested
-	}
-}
-
-function gdb(){
-	//Previous template resources
-	tab pr = tebastemplate::getResource("gdbPath");
-	if pr > 0{
-		print("GDB executable path gotten from previous template resources");
-		testProcess(pr);
-		return;
-	}
-	
-	//Shared resources
-	tab sr = tebas::getShared("paths.gdb");
-	if sr > 0{
-		tebastemplate::setResource("gdbPath", sr);
-		print("GDB executable path gotten from shared resources");
-		testProcess(sr);
-		return;
-	}
-	
-	//User input
-	tab m = input("Enter GDB executable path: ").removeQuotes();
-	tebastemplate::setResource("gdbPath", m);
-	if testProcess(m){
-		tebas::setShared("paths.gdb", m); //Only save if it was succesfully tested
+		tebas::setShared("paths." + sharedName, m); //Only save if it was succesfully tested
 	}
 }
 

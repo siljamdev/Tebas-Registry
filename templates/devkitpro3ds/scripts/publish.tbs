@@ -1,0 +1,97 @@
+import stdlib;
+import stdnum;
+import tebas;
+import tebasproject;
+import tebastemplate;
+import "scripts.build";
+import "utils.banner";
+
+tab digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+if args.length != 1{
+	error("Expected 1 argument: 'version'");
+	exit;
+}
+
+tab v = parseVersion(args.0);
+if !v{
+	exit;
+}
+
+tebasproject::folderCreate("releases");
+
+if tebasproject::folderExists("releases/" + args.0){
+	tab ans = input("That version already exists. Do you want to override it? [Y/N] ").lower();
+	if ans != "yes" & ans != "y"{
+		exit;
+	}
+	tebasproject::folderDelete("releases/" + args.0);
+}
+
+if build(){
+	if !tebasproject::fileExists("releases/app.rsf"){
+		error("The file 'releases/app.rsf' is required to build the .cia file");
+		exit;
+	}
+	
+	tebasproject::folderCreate("releases/" + args.0);
+	
+	tab banner = createBanner() ? ["-banner", "banner/banner.bin"] : [];
+	
+	tab version = ["-major", v.0] + (v.length > 1 ? ["-minor", v.1] : 0) + (v.length > 2 ? ["-micro", v.2] : 0);
+	
+	tab arg = ["-f", "cia", "-target", "t", "-exefslogo", version, "-elf", $"build/{tebasproject::getName()}.elf", "-icon", $"build/{tebasproject::getName()}.smdh", "-rsf", "releases/app.rsf", banner, "-o", $"releases/{args.0}/{tebasproject::getName()}.cia"];
+	
+	tebasproject::runProcess(tebastemplate::getResource("makeromPath"), "", arg);
+}
+
+function parseVersion(ver){
+	//Remove initial v
+	if ver%.0 == "v"{
+		ver = ver%[1, length]^;
+	}
+	
+	tab p = ver.split(".");
+	
+	if p.length > 3 | p.length < 1{
+		error("Invalid version, it must have between 1 and 3 numbers: N.N.N");
+		return 0;
+	}
+	
+	tab r = [];
+	
+	foreach part @ p{
+		if part%.length > 2{
+			error("Invalid version, number too long: '" + part + "'");
+			return 0;
+		}
+		
+		foreach c @ part%{
+			if !(c @ digits){
+				error("Invalid version, only number characters must be used: '" + c + "'");
+				return 0;
+			}
+		}
+		
+		if !stdnum::isNum(part) | part != stdnum::floor(part){
+			error("Invalid version, invalid number: '" + part + "'");
+			return 0;
+		}
+		
+		if r.length > 1{
+			if stdnum::greater(part, "15") | stdnum::less(part, "0"){
+				error("Invalid version, micro version must be between 0 and 15: '" + part + "'");
+				return 0;
+			}
+		}else{
+			if stdnum::greater(part, "63") | stdnum::less(part, "0"){
+				error("Invalid version, major and minor versiosn must be between 0 and 63: '" + part + "'");
+				return 0;
+			}
+		}
+		
+		r += part;
+	}
+	
+	return r;
+}

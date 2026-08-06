@@ -1,0 +1,13 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+import "utils.makefile";
+
+if args.length != 0{
+	error("Expected 0 arguments");
+	exit;
+}
+
+ensureDefaultMakefileExists();
+
+tebastemplate::open(tebastemplate::getPath() + "/default_Makefile");

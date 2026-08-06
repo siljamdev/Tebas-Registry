@@ -3,34 +3,42 @@ import tebas;
 import tebastemplate;
 import "utils.csproj";
 
-dotnet();
+genericExecutable("Dotnet", "dotnet", "dotnetPath", "dotnet", "dotnet");
 author();
 company();
 csprojFile();
 
-function dotnet(){
+function genericExecutable(capitalizedName, name, resourceName, sharedName, testFirst){
 	//Previous template resources
-	tab pr = tebastemplate::getResource("dotnetPath");
+	tab pr = tebastemplate::getResource(resourceName);
 	if pr > 0{
-		print("Dotnet executable path gotten from previous template resources");
+		print(capitalizedName + " executable path gotten from previous template resources: '" + pr + "'");
 		testProcess(pr);
 		return;
 	}
 	
+	//Test before other things
+	if testFirst^ != "" & testProcess(testFirst){
+		tebastemplate::setResource(resourceName, testFirst);
+		tebas::setShared("paths." + sharedName, testFirst);
+		print(capitalizedName + " executable path gotten from the default: '" + testFirst + "'");
+		return;
+	}
+	
 	//Shared resources
-	tab sr = tebas::getShared("paths.dotnet");
+	tab sr = tebas::getShared("paths." + sharedName);
 	if sr > 0{
-		tebastemplate::setResource("dotnetPath", sr);
-		print("Dotnet executable path gotten from shared resources");
+		tebastemplate::setResource(resourceName, sr);
+		print(capitalizedName + " executable path gotten from shared resources: '" + sr + "'");
 		testProcess(sr);
 		return;
 	}
 	
 	//User input
-	tab m = input("Enter Dotnet executable path: ").removeQuotes();
-	tebastemplate::setResource("dotnetPath", m);
+	tab m = input("Enter " + name + " executable path: ").removeQuotes();
+	tebastemplate::setResource(resourceName, m);
 	if testProcess(m){
-		tebas::setShared("paths.dotnet", m); //Only save if it was succesfully tested
+		tebas::setShared("paths." + sharedName, m); //Only save if it was succesfully tested
 	}
 }
 

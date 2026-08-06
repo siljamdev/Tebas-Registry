@@ -1,0 +1,30 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+import tebasproject;
+
+//ONLY ADD TO SCRIPTS!!!!
+
+export function createBanner(){
+	if !tebasproject::folderExists("banner") | (!tebasproject::fileExists("banner/banner.png") & !getAudio()){
+		return 0;
+	}
+	
+	tab im = tebasproject::fileExists("banner/banner.png") ? ["-i", "banner.png"] : [];
+	tab au = getAudio();
+	au = au ? ["-a", au] : [];
+	
+	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("bannertoolPath"), "banner", ["makebanner", im, au, "-o", "banner.bin"]);
+	
+	return exitCode == "0";
+}
+
+function getAudio(){
+	if tebasproject::fileExists("banner/sound.wav"){
+		return "sound.wav";
+	}else if tebasproject::fileExists("banner/sound.ogg"){
+		return "sound.ogg";
+	}else{
+		return 0;
+	}
+}

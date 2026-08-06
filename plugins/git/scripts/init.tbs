@@ -17,9 +17,9 @@ if !tebasproject::fileExists(".gitignore"){
 function getInitialGitignoreLines(){
 	ensureDefaultGitignoreExists();
 	
-	tab base = tebasplugin::fileRead("default.gitignore").splitLines();
+	tab base = tebasplugin::fileReadLines("default.gitignore");
 	tab p = tebasproject::getProperty("git.defaultGitignore");
-	if(p.length > 0){
+	if p{
 		return base + p;
 	}else{
 		return base;

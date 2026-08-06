@@ -1,0 +1,83 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+import paths;
+import "utils.makefile";
+
+tab devkitproPath = [];
+
+devkitpro();
+genericExecutable("Bash", "bash", "bashPath", "devkitpro.bash", devkitproPath + "/msys2/usr/bin/bash", 0);
+genericExecutable("Gdb", "gdb", "gdbPath", "devkitpro.gdb", devkitproPath + "/devkitARM/bin/arm-none-eabi-gdb", 0);
+genericExecutable("3dslink", "3dslink", "3dslinkPath", "devkitpro.3dslink", devkitproPath + "/tools/bin/3dslink", 0);
+genericExecutable("Makerom", "makerom", "makeromPath", "3ds.makerom", "", 0);
+genericExecutable("Bannertool", "bannertool", "bannertoolPath", "3ds.bannertool", "", 1);
+ensureDefaultMakefileExists();
+
+function devkitpro(){
+	//Previous template resources
+	tab pr = tebastemplate::getResource("devkitproPath");
+	if pr > 0{
+		devkitproPath = pr;
+		return;
+	}
+	
+	print("This template uses devkitPro to generate .3dsx files. Download devkitPro installer from https://github.com/devkitPro/installer/releases/latest");
+	print("Additionally, makerom is used to generate .cia files. Download makerom from https://github.com/3DSGuy/Project_CTR/releases");
+	print("Additionally, bannertool is used to generate HOME menu banners. Download bannertool from https://github.com/diasurgical/bannertool/releases/latest");
+	print("");
+	
+	//User input
+	devkitproPath = input("Enter the root devkitPro directory path: ").removeQuotes();
+	tebastemplate::setResource("devkitproPath", devkitproPath);
+}
+
+function genericExecutable(capitalizedName, name, resourceName, sharedName, testFirst, specialTest){
+	//Previous template resources
+	tab pr = tebastemplate::getResource(resourceName);
+	if pr > 0{
+		print(capitalizedName + " executable path gotten from previous template resources: '" + pr + "'");
+		testProcess(pr, specialTest);
+		return;
+	}
+	
+	//Test before other things
+	if testFirst^ != "" & testProcess(testFirst, specialTest){
+		tebastemplate::setResource(resourceName, testFirst);
+		tebas::setShared("paths." + sharedName, testFirst);
+		print(capitalizedName + " executable path gotten from the default: '" + testFirst + "'");
+		return;
+	}
+	
+	//Shared resources
+	tab sr = tebas::getShared("paths." + sharedName);
+	if sr > 0{
+		tebastemplate::setResource(resourceName, sr);
+		print(capitalizedName + " executable path gotten from shared resources: '" + sr + "'");
+		testProcess(sr, specialTest);
+		return;
+	}
+	
+	//User input
+	tab m = input("Enter " + name + " executable path: ").removeQuotes();
+	tebastemplate::setResource(resourceName, m);
+	if testProcess(m, specialTest){
+		tebas::setShared("paths." + sharedName, m); //Only save if it was succesfully tested
+	}
+}
+
+function testProcess(path, special){
+	tab num;
+	if special{
+		num = tebastemplate::runProcess(path, "", ["-h"]);
+	}else{
+		num = tebastemplate::runProcessSilent(path, "", ["-h"]);
+	}
+	
+	if num.length == 0{
+		error("'" + path + "' does not seem to be a runnable process");
+		return 0;
+	}
+	
+	return 1;
+}

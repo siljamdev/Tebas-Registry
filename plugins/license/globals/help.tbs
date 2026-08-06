@@ -15,7 +15,7 @@ print("Globals:");
 print("  list                       See a list of available licenses");
 print("  import <license> <path>    Import a new license");
 print("  delete <license>           Delete a license");
-print("  config <key> <value>       Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  config <key> <value>       Change the config. Use 'list' as key to get all valid keys, and 'see' to see the current config");
 print("  help                       This help menu");
 print("");
 print("This plugin adds a LICENSE file. There are multiple preinstalled licenses");

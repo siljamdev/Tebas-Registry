@@ -15,7 +15,7 @@ print("  debug    Debugs the project using PDB");
 print("Globals:");
 print("  run <file>               Runs a python file");
 print("  debug <file>             Debugs a python file");
-print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  tconfig <key> <value>    Change the config. Use 'list' as key to get all valid keys, and 'see' to see the current config");
 print("  help                     This help menu");
 print("");
 print("This template is used with the python executable to create python projects");

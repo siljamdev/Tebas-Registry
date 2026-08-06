@@ -14,7 +14,7 @@ print("  run [file]    Runs the fragroom shader");
 print("  web <file>    Transform fragroom shader into a .html file");
 print("Globals:");
 print("  run <file>               Runs a fragroom shader");
-print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  tconfig <key> <value>    Change the config. Use 'list' as key to get all valid keys, and 'see' to see the current config");
 print("  help                     This help menu");
 print("");
 print("This template helps you with fragroom shaders development (.fgrom files)");

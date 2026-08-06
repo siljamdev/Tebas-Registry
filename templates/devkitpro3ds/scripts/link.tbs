@@ -1,0 +1,60 @@
+import stdlib;
+import tebas;
+import tebasproject;
+import tebastemplate;
+import stdnum;
+
+tab digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+tab ip = [];
+
+if args.length == 1 & isIp(args.0){
+	ip = args.0;
+	tebasproject::fileWrite(".ip", ip);
+}else if tebasproject::fileExists(".ip"){
+	ip = tebasproject::fileReadLines(".ip").0;
+	print("Using saved ip: " + ip);
+}else{
+	print("ip needed: in your 3ds, open the homebrew launcher and press Y to find the ip");
+	error("Expected 0 or 1 arguments: 'ip'");
+	exit;
+}
+
+tab path = "build/" + tebasproject::getName() + ".3dsx";
+if !tebasproject::fileExists(path){
+	error("Missing .3dsx file, build first");
+	exit;
+}
+
+print("In your console, open the homebrew launcher and press Y. Make sure your device and your 3ds are on the same network!");
+
+tebasproject::runProcess(tebastemplate::getResource("3dslinkPath"), "", ["-a", ip, path^]);
+
+function isIp(ip){
+	tab s = ip.split(".");
+	
+	if s.length != 4{
+		error("Ivalid ipv4, expected 4 values: '" + ip + "'");
+		return 0;
+	}
+	
+	foreach n @ s{
+		if n%.length > 3{
+			error("Invalid ipv4, number too long: '" + n + "'");
+			return 0;
+		}
+		
+		foreach c @ n%{
+			if !(c @ digits){
+				error("Invalid ipv4, only number characters must be used: '" + c + "'");
+				return 0;
+			}
+		}
+		
+		if !stdnum::isNum(n) | stdnum::greater(n, "255") | stdnum::less(n, "0") | (n != stdnum::floor(n)){
+			error("Invalid ipv4, invalid number or out of bounds: '" + n + "'");
+			return 0;
+		}
+	}
+	
+	return 1;
+}

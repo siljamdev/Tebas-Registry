@@ -2,32 +2,40 @@ import stdlib;
 import tebas;
 import tebastemplate;
 
-python();
+genericExecutable("Python", "python", "pythonPath", "python", "python");
 unirun();
 
-function python(){
+function genericExecutable(capitalizedName, name, resourceName, sharedName, testFirst){
 	//Previous template resources
-	tab pr = tebastemplate::getResource("pythonPath");
+	tab pr = tebastemplate::getResource(resourceName);
 	if pr > 0{
-		print("python executable path gotten from previous template resources");
+		print(capitalizedName + " executable path gotten from previous template resources: '" + pr + "'");
 		testProcess(pr);
 		return;
 	}
 	
+	//Test before other things
+	if testFirst^ != "" & testProcess(testFirst){
+		tebastemplate::setResource(resourceName, testFirst);
+		tebas::setShared("paths." + sharedName, testFirst);
+		print(capitalizedName + " executable path gotten from the default: '" + testFirst + "'");
+		return;
+	}
+	
 	//Shared resources
-	tab sr = tebas::getShared("paths.python");
+	tab sr = tebas::getShared("paths." + sharedName);
 	if sr > 0{
-		tebastemplate::setResource("pythonPath", sr);
-		print("python executable path gotten from shared resources");
+		tebastemplate::setResource(resourceName, sr);
+		print(capitalizedName + " executable path gotten from shared resources: '" + sr + "'");
 		testProcess(sr);
 		return;
 	}
 	
 	//User input
-	tab m = input("Enter python executable path: ").removeQuotes();
-	tebastemplate::setResource("pythonPath", m);
+	tab m = input("Enter " + name + " executable path: ").removeQuotes();
+	tebastemplate::setResource(resourceName, m);
 	if testProcess(m){
-		tebas::setShared("paths.python", m); //Only save if it was succesfully tested
+		tebas::setShared("paths." + sharedName, m); //Only save if it was succesfully tested
 	}
 }
 

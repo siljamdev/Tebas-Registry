@@ -17,7 +17,7 @@ print("  publish                            Builds the project into the releases
 print("  add-package <package> [version]    Add a nuget package to the project");
 print("Globals:");
 print("  edit-csproj              Edit the default csproj file. You can use $name$, $author$ and $company$");
-print("  tconfig <key> <value>    Change the config. Use list as key to get all valid keys, and see to see the current config");
+print("  tconfig <key> <value>    Change the config. Use 'list' as key to get all valid keys, and 'see' to see the current config");
 print("  help                     This help menu");
 print("");
 print("This template is used with dotnet to build c# projects");
