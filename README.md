@@ -11,6 +11,7 @@ Try to keep in mind the [design guidelines](https://github.com/siljamdev/Tebas/b
 ---
 
 ## Available Templates
+- [devkitpro3ds](./templates/devkitpro3ds): Template that helps you create 3DS games with devkitPro
 - [dotnet](./templates/dotnet): Template that helps you create c# projects with dotnet
 - [fgrom](./templates/fgrom): Template that helps you create fragroom shaders
 - [gcc](./templates/gcc): Template that helps you create c projects with gcc
