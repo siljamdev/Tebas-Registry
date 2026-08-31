@@ -43,6 +43,10 @@ if build(){
 	tab arg = ["-f", "cia", "-target", "t", "-exefslogo", version, "-elf", $"build/{tebasproject::getName()}.elf", "-icon", $"build/{tebasproject::getName()}.smdh", "-rsf", "releases/app.rsf", banner, "-o", $"releases/{args.0}/{tebasproject::getName()}.cia"];
 	
 	tebasproject::runProcess(tebastemplate::getResource("makeromPath"), "", arg);
+	
+	if tebastemplate::getResource("publish3dsx") == "true"{
+		tebasproject::fileCopy( $"build/{tebasproject::getName()}.3dsx", $"releases/{args.0}/{tebasproject::getName()}.3dsx");
+	}
 }
 
 function parseVersion(ver){

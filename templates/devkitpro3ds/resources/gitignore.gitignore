@@ -1,9 +1,11 @@
 
-# Added by devkitpro template
+# Added by devkitpro3ds template
 [Bb]uild/
-[Rr]eleases/
 [Bb]in/
 /.ip
+
+# Keep the .rsf file
+[Rr]eleases/*/
 
 # Executables
 *.smdh
@@ -19,6 +21,9 @@
 
 # Compiled GPU shaders
 *.shbin
+
+# Bannertool output
+banner/*.bin
 
 #From https://github.com/github/gitignore/blob/main/C.gitignore (then modified):
 

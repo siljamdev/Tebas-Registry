@@ -2,9 +2,9 @@ import stdlib;
 import tebas;
 import tebastemplate;
 
-tab validKeys = ["bashPath", "gdbPath", "3dslinkPath", "makeromPath", "bannertoolPath", "runDetached"]; //List of valid configurable keys
-tab trueFalseKeys = ["runDetached"]; //Add here keys that can only take true/false values
-tab keysDescription = ["Path to devkitpro bash executable", "Path to devkitpro gdb executable", "Path to the 3dslink tool executable included in devkitpro", "Path to Project_CTR makerom executable", "Path to bannertool executable", "If true, debugging will occur in another window"]; //In the same order as validKeys
+tab validKeys = ["bashPath", "gdbPath", "3dslinkPath", "makeromPath", "bannertoolPath", "runDetached", "publish3dsx"]; //List of valid configurable keys
+tab trueFalseKeys = ["runDetached", "publish3dsx"]; //Add here keys that can only take true/false values
+tab keysDescription = ["Path to devkitpro bash executable", "Path to devkitpro gdb executable", "Path to the 3dslink tool executable included in devkitpro", "Path to Project_CTR makerom executable", "Path to bannertool executable", "If true, debugging will occur in another window", "If true, the .3dsx file will  be copies to releases output"]; //In the same order as validKeys
 
 if args.length == 1{
 	if args.0 == "list"{
