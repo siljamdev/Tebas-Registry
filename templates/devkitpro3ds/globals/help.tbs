@@ -10,11 +10,13 @@ if args.length != 0{
 print(getName() + " template help");
 print("");
 print("Scripts:");
-print("  run [ip]             Runs the project in the 3DS with 3dslink if build succeeds");
-print("  debug                Builds and debugs the project with gdb");
-print("  build                Builds the project");
-print("  link [ip]            Runs the project in the 3DS with 3dslink. The ip will be cached in a file called .ip");
-print("  publish <version>    Builds a .cia file into the releases folder");
+print("  run [ip]              Runs the project in the 3DS with 3dslink if build succeeds");
+print("  debug                 Builds and debugs the project with gdb");
+print("  build                 Builds the project");
+print("  link [ip]             Runs the project in the 3DS with 3dslink. The ip will be cached");
+print("  publish <version>     Builds a .cia file into the releases folder");
+print("  set-ip <ip>           Caches an ip");
+print("  set-server <enabled>  Expects a true/false value. If true, 3dslink will use the -s option to redirect output to host");
 print("Globals:");
 print("  edit-makefile            Edit the default Makefile file");
 print("  tconfig <key> <value>    Change the config. Use 'list' as key to get all valid keys, and 'see' to see the current config");

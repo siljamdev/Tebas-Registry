@@ -1,0 +1,35 @@
+import stdlib;
+import tebas;
+import stdnum;
+
+tab digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+export function isIp(ip){
+	tab s = ip.split(".");
+	
+	if s.length != 4{
+		error("Ivalid ipv4, expected 4 values: '" + ip + "'");
+		return 0;
+	}
+	
+	foreach n @ s{
+		if n%.length > 3{
+			error("Invalid ipv4, number too long: '" + n + "'");
+			return 0;
+		}
+		
+		foreach c @ n%{
+			if !(c @ digits){
+				error("Invalid ipv4, only number characters must be used: '" + c + "'");
+				return 0;
+			}
+		}
+		
+		if !stdnum::isNum(n) | stdnum::greater(n, "255") | stdnum::less(n, "0") | (n != stdnum::floor(n)){
+			error("Invalid ipv4, invalid number or out of bounds: '" + n + "'");
+			return 0;
+		}
+	}
+	
+	return 1;
+}
