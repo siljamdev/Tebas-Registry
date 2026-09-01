@@ -11,7 +11,12 @@ if args.length != 1{
 }
 
 if args.0.lower() == "t" | args.0.lower() == "true"{
-	tebasproject::setResource("server", "true");
+	args.0 = "true";
+}else if args.0.lower() == "f" | args.0.lower() == "false"{
+	args.0 = "false";
 }else{
-	tebasproject::setResource("server", "false");
+	error("Argument must be either 'true' or 'false'");
+	exit;
 }
+
+tebasproject::setResource("server", args.0);
