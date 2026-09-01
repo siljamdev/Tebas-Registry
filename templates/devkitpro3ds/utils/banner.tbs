@@ -6,25 +6,40 @@ import tebasproject;
 //ONLY ADD TO SCRIPTS!!!!
 
 export function createBanner(){
-	if !tebasproject::folderExists("banner") | (!tebasproject::fileExists("banner/banner.png") & !getAudio()){
+	if !tebasproject::folderExists("banner"){
 		return 0;
 	}
 	
-	tab im = tebasproject::fileExists("banner/banner.png") ? ["-i", "banner.png"] : [];
-	tab au = getAudio();
-	au = au ? ["-a", au] : [];
+	tab im = getImageOption();
+	tab au = getAudioOption();
 	
-	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("bannertoolPath"), "banner", ["makebanner", im, au, "-o", "banner.bin"]);
+	if(!im & !au){
+		return 0;
+	}
+	
+	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("bannertoolPath"), "banner", ["makebanner", im, au, "-o", "banner.bnr"]);
 	
 	return exitCode == "0";
 }
 
-function getAudio(){
-	if tebasproject::fileExists("banner/sound.wav"){
-		return "sound.wav";
-	}else if tebasproject::fileExists("banner/sound.ogg"){
-		return "sound.ogg";
+function getImageOption(){
+	if tebasproject::fileExists("banner/banner.cgfx"){
+		return ["-ci", "banner.cgfx"];
+	}else if tebasproject::fileExists("banner/banner.png"){
+		return ["-i", "banner.png"];
 	}else{
-		return 0;
+		return [];
+	}
+}
+
+function getAudioOption(){
+	if tebasproject::fileExists("banner/sound.cwav"){
+		return ["-ca", "sound.cwav"];
+	}else if tebasproject::fileExists("banner/sound.wav"){
+		return ["-a", "sound.wav"];
+	}else if tebasproject::fileExists("banner/sound.ogg"){
+		return ["-a", "sound.ogg"];
+	}else{
+		return [];
 	}
 }

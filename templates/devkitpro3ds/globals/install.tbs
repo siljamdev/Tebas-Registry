@@ -1,4 +1,5 @@
 import stdlib;
+import stdlist;
 import tebas;
 import tebastemplate;
 import paths;
@@ -7,7 +8,7 @@ import "utils.makefile";
 tab devkitproPath = [];
 
 devkitpro();
-genericExecutable("Bash", "bash", "bashPath", "devkitpro.bash", devkitproPath + "/msys2/usr/bin/bash", 0);
+genericExecutable("Bash", "bash", "bashPath", "devkitpro.bash", devkitproPath + "/msys2/usr/bin/bash", 2);
 genericExecutable("Gdb", "gdb", "gdbPath", "devkitpro.gdb", devkitproPath + "/devkitARM/bin/arm-none-eabi-gdb", 0);
 genericExecutable("3dslink", "3dslink", "3dslinkPath", "devkitpro.3dslink", devkitproPath + "/tools/bin/3dslink", 0);
 genericExecutable("Makerom", "makerom", "makeromPath", "3ds.makerom", "", 0);
@@ -68,8 +69,10 @@ function genericExecutable(capitalizedName, name, resourceName, sharedName, test
 
 function testProcess(path, special){
 	tab num;
-	if special{
-		num = tebastemplate::runProcess(path, "", ["-h"]);
+	if special == 1{
+		num = stdlist::getTab(tebastemplate::runProcessWithOutput(path, "", ["-h"]), 2);
+	}else if special == 2{
+		num = tebastemplate::runProcessSilent(path, "", ["--help"]);
 	}else{
 		num = tebastemplate::runProcessSilent(path, "", ["-h"]);
 	}

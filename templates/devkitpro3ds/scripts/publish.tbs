@@ -36,7 +36,7 @@ if build(){
 	
 	tebasproject::folderCreate("releases/" + args.0);
 	
-	tab banner = createBanner() ? ["-banner", "banner/banner.bin"] : [];
+	tab banner = createBanner() ? ["-banner", "banner/banner.bnr"] : [];
 	
 	tab version = ["-major", v.0] + (v.length > 1 ? ["-minor", v.1] : 0) + (v.length > 2 ? ["-micro", v.2] : 0);
 	
