@@ -6,7 +6,7 @@ import tebastemplate;
 import "scripts.build";
 import "utils.banner";
 
-tab digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+global digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 if args.length != 1{
 	error("Expected 1 argument: 'version'");

@@ -8,9 +8,10 @@ import "scripts.build";
 import "utils.csproj";
 import "utils.output";
 
-tab whitespace = [" ", "	", "\n"];
+global whitespace = [" ", "	", "\n"];
+global ver;
 
-tab built = 0;
+global built = 0;
 
 if args.length != 0{
 	error("Expected 0 arguments");

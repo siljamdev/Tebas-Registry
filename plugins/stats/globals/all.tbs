@@ -4,11 +4,11 @@ import paths;
 import tebas;
 import tebasplugin;
 
-tab allowedTemplates = [];
-tab forbiddenTemplates = [];
+global allowedTemplates = [];
+global forbiddenTemplates = [];
 
-tab allowedFolders = [];
-tab forbiddenFolders = [];
+global allowedFolders = [];
+global forbiddenFolders = [];
 
 if args.length == 1{
 	parseFilter(args.0);

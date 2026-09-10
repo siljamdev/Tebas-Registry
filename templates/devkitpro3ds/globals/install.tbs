@@ -5,7 +5,7 @@ import tebastemplate;
 import paths;
 import "utils.makefile";
 
-tab devkitproPath = [];
+global devkitproPath = [];
 
 devkitpro();
 genericExecutable("Bash", "bash", "bashPath", "devkitpro.bash", devkitproPath + "/msys2/usr/bin/bash", 2);

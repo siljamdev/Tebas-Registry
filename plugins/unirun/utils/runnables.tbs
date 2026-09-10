@@ -3,7 +3,7 @@ import tebas;
 import tebasplugin;
 import paths;
 
-tab whitespace = [" ", "	", "\n"];
+global whitespace = [" ", "	", "\n"];
 
 export function tryExec(file, path){
 	tab lines = tebasplugin::fileReadLines(path);
