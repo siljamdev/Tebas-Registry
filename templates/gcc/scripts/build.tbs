@@ -10,7 +10,7 @@ export function build(){
 	tab files = tebasproject::folderListChildFiles("src", "*.c");
 	
 	tab out = "bin/" + tebasproject::getName();
-	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + "-Iinclude" + "-o" + out^);
+	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", "@gcc.args" + files + "-Iinclude" + "-o" + out^);
 	
 	tebasproject::setResource("timesBuilt", stdnum::sum(tebasproject::getResource("timesBuilt"), "1"));
 	
@@ -21,7 +21,7 @@ export function buildDebug(){
 	tab files = tebasproject::folderListChildFiles("src", "*.c");
 	
 	tab out = "bin/" + tebasproject::getName();
-	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + "-Iinclude" + "-g" + "-o" + out^);
+	tab exitCode = tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", "@gcc.args" + files + "-Iinclude" + "-g" + "-o" + out^);
 	
 	tebasproject::setResource("timesBuilt", stdnum::sum(tebasproject::getResource("timesBuilt"), "1"));
 	
@@ -34,7 +34,7 @@ export function buildPublish(version){
 	tebasproject::folderCreate("releases/" + version);
 	
 	tab out = "releases/" + version + "/" + tebasproject::getName();
-	tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + "-Iinclude" + "-o" + out^);
+	tebasproject::runProcess(tebastemplate::getResource("gccPath"), "", files + "@gcc.args" + "-Iinclude" + "-o" + out^);
 	
 	tebasproject::setResource("timesBuilt", stdnum::sum(tebasproject::getResource("timesBuilt"), "1"));
 }

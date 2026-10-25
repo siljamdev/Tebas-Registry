@@ -15,4 +15,8 @@ if files.length <= 0{
 	}
 }
 
+if !tebasproject::fileExists("gcc.args"){
+	tebasproject::fileWrite("gcc.args", tebastemplate::getResource("gccArgs"));
+}
+
 tebasproject::setResource("timesBuilt", "0");
