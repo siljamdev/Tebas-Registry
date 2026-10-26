@@ -1,0 +1,28 @@
+import stdlib;
+import tebas;
+import tebastemplate;
+
+print("Nintendo 3DS font supported unicode icons");
+print("");
+print("  \\uE000: A button");
+print("  \\uE001: B button");
+print("  \\uE002: X button");
+print("  \\uE003: Y button");
+print("  \\uE004: L button");
+print("  \\uE005: R button");
+print("  \\uE006: Control pad");
+print("  \\uE070: White close icon");
+print("  \\uE071: Black close icon");
+print("  \\uE072: Back icon");
+print("  \\uE073: Home button");
+print("  \\uE074: Steps icon");
+print("  \\uE075: Play coin icon");
+print("  \\uE076: Video camera icon");
+print("  \\uE077: Circle pad");
+print("  \\uE078: Power button");
+print("  \\uE079: Control pad up");
+print("  \\uE07A: Control pad down");
+print("  \\uE07B: Control pad left");
+print("  \\uE07C: Control pad right");
+print("  \\uE07D: Control pad up-down");
+print("  \\uE07E: Control pad left-right");
